@@ -1,0 +1,26 @@
+name: intelligent-agricultural-management-platform-pipeline
+
+on:
+  push:
+    branches: ["main"]
+
+jobs:
+  build:
+    runs-on: intelligent-agricultural-management-platform-pipeline
+
+    steps:
+      - uses: actions/checkout@v3
+      # - name: Use Node.js ${{ matrix.node-version }}
+      #   uses: actions/setup-node@v3
+      #   with:
+      #     node-version: ${{ matrix.node-version }}
+      #     cache: "npm"
+      - run: pwd
+      - run: ls
+      - name: Production Build
+        run: |
+          cd intelligent-agricultural-management-platform
+          ls
+          npm ci
+          npm run build --if-present
+      # - run: npm run build --if-present
