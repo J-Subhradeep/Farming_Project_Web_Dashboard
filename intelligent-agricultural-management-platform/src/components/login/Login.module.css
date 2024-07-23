@@ -1,0 +1,91 @@
+.background {
+  background-color: #56a281;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.logincard {
+  width: 500px;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+}
+
+.leafIcon {
+  width: 30px;
+  height: 30px;
+  margin-right: 10px;
+}
+
+.leafText {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.headerline {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+.titleh1 {
+  font-size: 28px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  text-align: center;
+}
+.formStyle {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.formStyle label {
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 5px;
+}
+
+.formStyle input {
+  padding: 10px;
+  border: 1px solid #6d6d6d;
+  border-radius: 5px;
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.devider {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 20px 0;
+  height: 1.5px;
+  background-color: #6d6d6d;
+}
+
+.button {
+  background-color: #56a281;
+  border: none;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.login {
+  background-color: #56a281;
+}
+
+.createAccount {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #5688b7;
+}
