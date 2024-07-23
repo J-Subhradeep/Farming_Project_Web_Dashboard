@@ -1,10 +1,25 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./Login.module.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+
 const Login = () => {
+  const navigator = useNavigate();
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+  useEffect(() => {
+    const user = localStorage.getItem("username");
+    if (user) {
+      navigator("/");
+    }
+  }, []);
+
   const handleLogin = (e) => {
     e.preventDefault();
     console.log("Login button clicked");
+    // save the user to the local storage
+    localStorage.setItem("username", username);
+    navigator("/");
   };
 
   return (
@@ -40,6 +55,7 @@ const Login = () => {
             name="username"
             placeholder="Username"
             className={styles.input}
+            onChange={(e) => setUsername(e.target.value)}
             required
           />
           <label htmlFor="password" className={styles.label}>
@@ -50,6 +66,7 @@ const Login = () => {
             name="password"
             placeholder="Password"
             className={styles.input}
+            onChange={(e) => setPassword(e.target.value)}
             required
           />
           <button type="submit" className={`${styles.button} ${styles.login}`}>
