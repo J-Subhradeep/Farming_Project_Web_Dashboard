@@ -91,7 +91,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: row;
   height: 100vh;
-  background-color: ${greenishblue};
+  background-color: ${greenishwhite};
 `;
 
 const LeftPane = styled.div`
@@ -99,7 +99,7 @@ const LeftPane = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: ${greenishwhite};
+  background-color: ${greenishblue};
 `;
 
 const RightPane = styled.div`
@@ -139,7 +139,7 @@ const Input = styled.input`
 const Button = styled.button`
   width: 100%;
   padding: 0.75rem;
-  background-color: ${greenishwhite};
+  background-color: ${greenishblue};
   color: white;
   border: none;
   border-radius: 4px;
@@ -153,7 +153,7 @@ const Button = styled.button`
 
 const LinkText = styled(Link)`
   margin-top: 1rem;
-  color: ${greenishwhite};
+  color: ${greenishblue};
   text-decoration: none;
   font-size: 14px;
 
