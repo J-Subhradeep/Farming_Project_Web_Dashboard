@@ -3,6 +3,9 @@ import styled from "@emotion/styled";
 
 import { IoHomeOutline } from "react-icons/io5";
 import { RxComponent1 } from "react-icons/rx";
+import { MdManageAccounts } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
+import { greenishblue, greenishwhite } from "../../config";
 
 // Sidebar container
 const SidebarContainer = styled.div`
@@ -22,7 +25,7 @@ const Section = styled.div`
 
 // Section title
 const SectionTitle = styled.h3`
-  font-size: 16px;
+  font-size: 20px;
   color: #333;
   margin-bottom: 10px;
 `;
@@ -31,14 +34,14 @@ const SectionTitle = styled.h3`
 const SectionLink = styled.a`
   display: flex;
   align-items: center;
-  font-size: 14px;
+  font-size: 18px;
   color: #555;
   text-decoration: none;
   margin: 5px 0;
   gap: 5px;
 
   &:hover {
-    color: #007bff;
+    color: ${greenishblue};
   }
 `;
 
@@ -50,37 +53,39 @@ const Devider = styled.hr`
 `;
 
 const LeftSidebar = () => {
+  const navigate = useNavigate();
   const HandleLogout = () => {
-    localStorage.removeItem("token");
-    window.location.href = "/login";
+    localStorage.removeItem("username");
+    sessionStorage.removeItem("i_token");
+    navigate("/login");
   };
 
   return (
     <SidebarContainer>
       <SectionTitle>Navigation</SectionTitle>
       <Devider />
-      <SectionLink href="#">
+      <SectionLink href="/">
         <IoHomeOutline /> Dashboard
       </SectionLink>
       <Devider />
-      <SectionLink href="#">
+      <SectionLink href="/farm-management">
+        <MdManageAccounts />
+        Farm Managementt
+      </SectionLink>
+      <Devider />
+      <SectionLink href="/zone-management">
         <RxComponent1 />
-        Component
+        Zone Management
       </SectionLink>
       <Devider />
       <SectionLink href="#">
         <RxComponent1 />
-        Component
+        Irrigation Systems
       </SectionLink>
       <Devider />
       <SectionLink href="#">
         <RxComponent1 />
-        Component
-      </SectionLink>
-      <Devider />
-      <SectionLink href="#">
-        <RxComponent1 />
-        Component
+        Soil Sensors
       </SectionLink>
       {/* <Section>
         <SectionTitle>Navigation</SectionTitle>
@@ -110,6 +115,7 @@ const LeftSidebar = () => {
       <Devider />
       <Section>
         <SectionTitle>Authentication</SectionTitle>
+        <br />
         <SectionLink onClick={HandleLogout}>Logout</SectionLink>
       </Section>
     </SidebarContainer>

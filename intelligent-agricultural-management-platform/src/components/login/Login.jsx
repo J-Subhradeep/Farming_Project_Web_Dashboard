@@ -5,12 +5,86 @@ import { greenishblue, greenishwhite } from "../../config";
 
 // image import
 import login from "../../assets/login.png";
+import axios from "axios";
+
+const Login = () => {
+  const navigate = useNavigate();
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+  useEffect(() => {
+    const user = sessionStorage.getItem("i_token");
+    if (user) {
+      navigate("/");
+    }
+  }, []);
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    console.log("Login button clicked");
+    try {
+      await axios
+        .post("https://api.web-project.in/agriculture/auth/login", {
+          username,
+          role: "MANAGER",
+          password,
+        })
+        .then((response) => {
+          if (response.data.success === true) {
+            const token = response.data.token;
+            const userID = response.data.userId;
+            sessionStorage.setItem("i_token", token);
+            localStorage.setItem("username", userID);
+            navigate("/");
+          } else {
+            alert("Registration Failed");
+            console.log(response.data);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  return (
+    <Container>
+      <LeftPane>
+        <img src={login} alt="AGRICULTURE Management Service" />
+      </LeftPane>
+      <RightPane>
+        <FormContainer>
+          <Title>AGRICULTURE Management Service</Title>
+          <form onSubmit={handleLogin}>
+            <Input
+              type="text"
+              placeholder="Username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
+            <Input
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <Button type="submit">Login</Button>
+          </form>
+          <LinkText to="/forgot-password">Forgot Password?</LinkText>
+          <LinkText to="/create-account">Create Account</LinkText>
+        </FormContainer>
+      </RightPane>
+    </Container>
+  );
+};
 
 const Container = styled.div`
   display: flex;
   flex-direction: row;
   height: 100vh;
-  background-color: ${greenishblue};
+  background-color: ${greenishwhite};
 `;
 
 const LeftPane = styled.div`
@@ -18,7 +92,7 @@ const LeftPane = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: ${greenishwhite};
+  background-color: ${greenishblue};
 `;
 
 const RightPane = styled.div`
@@ -58,7 +132,7 @@ const Input = styled.input`
 const Button = styled.button`
   width: 100%;
   padding: 0.75rem;
-  background-color: ${greenishwhite};
+  background-color: ${greenishblue};
   color: white;
   border: none;
   border-radius: 4px;
@@ -80,55 +154,5 @@ const LinkText = styled(Link)`
     text-decoration: underline;
   }
 `;
-
-const Login = () => {
-  const navigate = useNavigate();
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-
-  useEffect(() => {
-    const user = localStorage.getItem("username");
-    if (user) {
-      navigate("/");
-    }
-  }, []);
-
-  const handleLogin = (e) => {
-    e.preventDefault();
-    console.log("Login button clicked");
-    localStorage.setItem("username", username);
-    navigate("/");
-  };
-
-  return (
-    <Container>
-      <LeftPane>
-        <img src={login} alt="AGRICULTURE Management Service" />
-      </LeftPane>
-      <RightPane>
-        <FormContainer>
-          <Title>AGRICULTURE Management Service</Title>
-          <form onSubmit={handleLogin}>
-            <Input
-              type="text"
-              placeholder="Mobile Number"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-            />
-            <Input
-              type="password"
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            <Button type="submit">Login</Button>
-          </form>
-          <LinkText to="/forgot-password">Forgot Password?</LinkText>
-          <LinkText to="/create-account">Create Account</LinkText>
-        </FormContainer>
-      </RightPane>
-    </Container>
-  );
-};
 
 export default Login;
