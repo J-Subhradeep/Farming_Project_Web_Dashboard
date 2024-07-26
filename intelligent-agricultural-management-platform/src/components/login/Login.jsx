@@ -146,7 +146,7 @@ const Button = styled.button`
 
 const LinkText = styled(Link)`
   margin-top: 1rem;
-  color: ${greenishwhite};
+  color: ${greenishblue};
   text-decoration: none;
   font-size: 14px;
 
