@@ -1,14 +1,13 @@
 import React, { useEffect } from "react";
 import styled from "@emotion/styled";
 import { useNavigate } from "react-router-dom";
-import Navbar from "../navbar/Navbar";
 import Dashboard from "../Dashboard/Dashboard";
 import Leftsidebar from "../leftsidebar/Leftsidebar";
 
 const Home = () => {
   const navigator = useNavigate();
   useEffect(() => {
-    const user = localStorage.getItem("username");
+    const user = sessionStorage.getItem("i_token");
     if (!user) {
       navigator("/login");
     }
