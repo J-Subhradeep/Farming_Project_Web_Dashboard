@@ -14,14 +14,12 @@ const Zonemangement = () => {
     zone: "",
   });
 
+  const [farms, setFarms] = useState([]);
+
   const [token, setToken] = useState("");
-  useEffect(() => {
-    const token = sessionStorage.getItem("i_token");
-    if (!token) {
-      window.location.href = "/login";
-    }
-    setToken(token);
-  }, []);
+
+  const [zones, setZones] = useState([]);
+
   const handleZoneCreation = async (e) => {
     e.preventDefault();
     console.log("Zone created");
@@ -43,9 +41,60 @@ const Zonemangement = () => {
     }
   };
 
+  // Fetch the farm id from the database and display it in the select option
+
+  const fetchFarmByManagerId = async (id, authtoken) => {
+    try {
+      await axios
+        .get(
+          `https://api.web-project.in/agriculture/farms/get-farms?managerId=${id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${authtoken}`,
+            },
+          }
+        )
+        .then((res) => {
+          console.log(res.data);
+          setFarms(res.data);
+        });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const getZoneByFarmId = async (id, token, farmName) => {
+    try {
+      await axios
+        .get(
+          `https://api.web-project.in/agriculture/zones/get-zones?farmId=${id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        )
+        .then((res) => {
+          // console.log(res.data);
+          setZones(res.data.map((zone) => ({ ...zone, farmName: farmName })));
+        });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   useEffect(() => {
-    console.log(zone);
-  }, [zone]);
+    const localToken = sessionStorage.getItem("i_token");
+    if (!localToken) {
+      window.location.href = "/login";
+    }
+    setToken(localToken);
+    fetchFarmByManagerId(localStorage.getItem("username"), localToken);
+  }, []);
+
+  useEffect(() => {
+    console.log(zones);
+  }, [zones]);
 
   return (
     <Contianer>
@@ -78,9 +127,11 @@ const Zonemangement = () => {
                     }
                   >
                     <option value="">Select Firm ID</option>
-                    <option value="zone1">Zone 1</option>
-                    <option value="zone2">Zone 2</option>
-                    <option value="zone3">Zone 3</option>
+                    {farms.map((farm) => (
+                      <option key={farm.id} value={farm.id}>
+                        {farm.name}
+                      </option>
+                    ))}
                   </select>
                 </Formitem>
                 <Formitem>
@@ -101,22 +152,53 @@ const Zonemangement = () => {
             </MainForm>
           </Additem>
           <ListItems>
-            <Table>
-              <thead>
-                <tr>
-                  <th>Farm Name</th>
-                  <th>Contact Number</th>
-                  <th>Address</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>farm1</td>
-                  <td>1234567890</td>
-                  <td>address1</td>
-                </tr>
-              </tbody>
-            </Table>
+            <Formitem>
+              <label htmlFor="zone">
+                Select Farm name to get the zone details
+              </label>
+              <select
+                name="zone"
+                id="zone"
+                style={{
+                  padding: "10px",
+                  border: "1px solid #333",
+                  borderRadius: "5px",
+                  width: "50%",
+                }}
+                onChange={(e) =>
+                  getZoneByFarmId(
+                    e.target.value,
+                    token,
+                    e.target.options[e.target.selectedIndex].text
+                  )
+                }
+              >
+                <option value="">Select Firm ID</option>
+                {farms.map((farm) => (
+                  <option key={farm.id} value={farm.id}>
+                    {farm.name}
+                  </option>
+                ))}
+              </select>
+            </Formitem>
+            {zones.length != 0 && (
+              <Table>
+                <thead>
+                  <tr>
+                    <th>Zone Name</th>
+                    <th>Farm Name</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {zones.map((zone) => (
+                    <tr key={zone.id}>
+                      <td>{zone.name}</td>
+                      <td>{zone.farmName}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </Table>
+            )}
           </ListItems>
         </Wrapper>
       </Zonecontainer>
@@ -229,6 +311,8 @@ const ListItems = styled.div`
 
 const Table = styled.table`
   width: 100%;
+  margin-top: 20px;
+
   border-collapse: collapse;
   th {
     background-color: ${greenishblue};
@@ -241,6 +325,7 @@ const Table = styled.table`
   td {
     padding: 10px;
     border-bottom: 1px solid ${greenishwhite};
+    text-align: center;
   }
 `;
 

@@ -72,8 +72,6 @@ const FarmMangement = () => {
     }
   };
 
-  useEffect(() => {}, []);
-
   return (
     <Contianer>
       <LeftSidebar title="farm" />
