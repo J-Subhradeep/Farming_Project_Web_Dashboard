@@ -18,7 +18,7 @@ const chartData = {
       position: "top",
     },
     xaxis: {
-      type: "datetime",
+      type: "date",
       categories: [],
       axisBorder: {
         show: false,

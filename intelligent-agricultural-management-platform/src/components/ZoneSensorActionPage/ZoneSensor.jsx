@@ -105,7 +105,8 @@ const ZoneSensor = () => {
       const categories = response.data.map((data) =>
         convertTimestamp(data.timestamp)
       );
-      console.log(categories);
+
+      // sort the data
 
       setMoisture({
         ...moisture,
@@ -144,10 +145,12 @@ const ZoneSensor = () => {
 
   const convertTimestamp = (timestamp) => {
     // 2024-07-28T19:42:11+05:30 => mm/dd/yyyy hh:mm
+
     const date = new Date(timestamp);
-    return `${
-      date.getMonth() + 1
-    }/${date.getDate()}/${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}`;
+    // return date;
+    return `${date.getDate()}/${date.getMonth()}/${date.getFullYear()} ${date.getHours()}:${
+      date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes()
+    }`;
   };
 
   useEffect(() => {
@@ -167,6 +170,11 @@ const ZoneSensor = () => {
       navigate("/zone-management");
     }
   }, []);
+
+  useEffect(() => {
+    console.log(moisture);
+    console.log(selectedSensors);
+  }, [moisture, selectedSensors]);
 
   return (
     <Contianer>
