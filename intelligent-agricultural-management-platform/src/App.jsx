@@ -8,6 +8,7 @@ import Login from "./components/login/Login";
 import Register from "./components/register/Register";
 import ZoneManagement from "./components/ZoneManagement/Zonemangement";
 import FarmMangement from "./components/FarmManagement/FarmMangement";
+import ZoneSensor from "./components/ZoneSensorActionPage/ZoneSensor";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -22,6 +23,7 @@ function App() {
           <Route path="/create-account" element={<Register />} />
           <Route path="/zone-management" element={<ZoneManagement />} />
           <Route path="/farm-management" element={<FarmMangement />} />
+          <Route path="/zone-sensor-action" element={<ZoneSensor />} />
           <Route path="*" element={<h1>Not Found</h1>} />
         </Routes>
       </BrowserRouter>

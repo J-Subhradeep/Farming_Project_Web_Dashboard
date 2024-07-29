@@ -2,89 +2,9 @@ import React from "react";
 import styled from "@emotion/styled";
 
 import Chart from "react-apexcharts";
-import uniqueVisitorChart from "./chart/analytics-unique-visitor-chart";
-import customerChart from "./chart/analytics-cuatomer-chart";
-import customerChart1 from "./chart/analytics-cuatomer-chart-1";
-
-const Container = styled.div`
-  padding: 1rem 10px;
-`;
-const Wrapper = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  gap: 10px;
-  margin-bottom: 1rem;
-`;
-const Card = styled.div`
-  background: ${(props) => props.background};
-  padding: 1rem;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  width: 100%;
-  max-width: ${(props) => props.mxwidth};
-  height: ${(props) => props.height || "auto"};
-
-  :hover {
-    box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.4);
-  }
-`;
-
-const Texth6 = styled.h6`
-  font-size: 16px;
-  color: #fff;
-  margin-bottom: 1rem;
-`;
-const Texth2 = styled.h2`
-  font-size: 24px;
-  color: #fff;
-  margin-bottom: 1rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-`;
-
-const Text = styled.p`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  font-size: 16px;
-  color: #fff;
-  margin-bottom: 1rem;
-`;
-
-const Textspan = styled.span`
-  font-size: 16px;
-  color: #fff;
-`;
-
-const Col = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  gap: 10px;
-  width: 100%;
-  max-width: 100%;
-`;
-
-const CardGraph = styled.div`
-  background: #fff;
-  padding: 1rem;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  width: 100%;
-  max-width: 500px;
-`;
-const CardHeader = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1rem;
-`;
-
-const CardBody = styled.div`
-  padding: 1rem;
-`;
+import uniqueVisitorChart from "../chart/analytics-unique-visitor-chart";
+import customerChart from "../chart/analytics-cuatomer-chart";
+import customerChart1 from "../chart/analytics-cuatomer-chart-1";
 
 const Dashboard = () => {
   return (
@@ -192,3 +112,83 @@ const CardDashboard = ({
 };
 
 export default Dashboard;
+
+const Container = styled.div`
+  padding: 1rem 10px;
+`;
+const Wrapper = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 1rem;
+`;
+const Card = styled.div`
+  background: ${(props) => props.background};
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: ${(props) => props.mxwidth};
+  height: ${(props) => props.height || "auto"};
+
+  :hover {
+    box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.4);
+  }
+`;
+
+const Texth6 = styled.h6`
+  font-size: 16px;
+  color: #fff;
+  margin-bottom: 1rem;
+`;
+const Texth2 = styled.h2`
+  font-size: 24px;
+  color: #fff;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+const Text = styled.p`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  font-size: 16px;
+  color: #fff;
+  margin-bottom: 1rem;
+`;
+
+const Textspan = styled.span`
+  font-size: 16px;
+  color: #fff;
+`;
+
+const Col = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 10px;
+  width: 100%;
+  max-width: 100%;
+`;
+
+const CardGraph = styled.div`
+  background: #fff;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 500px;
+`;
+const CardHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+`;
+
+const CardBody = styled.div`
+  padding: 1rem;
+`;

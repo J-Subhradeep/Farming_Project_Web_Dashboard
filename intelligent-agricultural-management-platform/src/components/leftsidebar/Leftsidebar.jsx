@@ -4,7 +4,7 @@ import styled from "@emotion/styled";
 import { IoHomeOutline } from "react-icons/io5";
 import { RxComponent1 } from "react-icons/rx";
 import { MdManageAccounts } from "react-icons/md";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { greenishblue, greenishwhite } from "../../config";
 
 // Sidebar container
@@ -21,28 +21,38 @@ const LeftSidebar = () => {
     <SidebarContainer>
       <SectionTitle>Navigation</SectionTitle>
       <Devider />
-      <SectionLink href="/">
-        <IoHomeOutline /> Dashboard
+      <SectionLink>
+        <Link to="/">
+          <IoHomeOutline /> Dashboard
+        </Link>
       </SectionLink>
       <Devider />
-      <SectionLink href="/farm-management">
-        <MdManageAccounts />
-        Farm Management
+      <SectionLink>
+        <Link to="/farm-management">
+          <MdManageAccounts />
+          Farm Management
+        </Link>
       </SectionLink>
       <Devider />
-      <SectionLink href="/zone-management">
-        <RxComponent1 />
-        Zone Management
+      <SectionLink>
+        <Link to="/zone-management">
+          <RxComponent1 />
+          Zone Management
+        </Link>
       </SectionLink>
       <Devider />
-      <SectionLink href="#">
-        <RxComponent1 />
-        Irrigation Systems
+      <SectionLink>
+        <Link to="#">
+          <RxComponent1 />
+          Irrigation Systems
+        </Link>
       </SectionLink>
       <Devider />
-      <SectionLink href="#">
-        <RxComponent1 />
-        Soil Sensors
+      <SectionLink>
+        <Link to="#">
+          <RxComponent1 />
+          Soil Sensors
+        </Link>
       </SectionLink>
       {/* <Section>
         <SectionTitle>Navigation</SectionTitle>
@@ -105,16 +115,14 @@ const SectionTitle = styled.h3`
 
 // Links within sections
 const SectionLink = styled.a`
-  display: flex;
-  align-items: center;
-  font-size: 18px;
-  color: #555;
-  text-decoration: none;
-  margin: 5px 0;
-  gap: 5px;
-
-  &:hover {
-    color: ${greenishblue};
+  a {
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+    color: #555;
+    text-decoration: none;
+    margin: 5px 0;
+    gap: 5px;
   }
 `;
 

@@ -187,6 +187,7 @@ const Zonemangement = () => {
                   <tr>
                     <th>Zone Name</th>
                     <th>Farm Name</th>
+                    <th>Actions</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -194,6 +195,11 @@ const Zonemangement = () => {
                     <tr key={zone.id}>
                       <td>{zone.name}</td>
                       <td>{zone.farmName}</td>
+                      <td>
+                        <Link to={`/zone-sensor-action?zone=${zone.id}`}>
+                          Action
+                        </Link>
+                      </td>
                     </tr>
                   ))}
                 </tbody>
@@ -326,6 +332,11 @@ const Table = styled.table`
     padding: 10px;
     border-bottom: 1px solid ${greenishwhite};
     text-align: center;
+
+    a {
+      text-decoration: none;
+      color: ${greenishblue};
+    }
   }
 `;
 
