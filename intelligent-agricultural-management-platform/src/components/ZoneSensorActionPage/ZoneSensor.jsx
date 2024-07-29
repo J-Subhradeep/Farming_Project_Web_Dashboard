@@ -13,8 +13,8 @@ import { Link, useNavigate } from "react-router-dom";
 const ZoneSensor = () => {
   const navigate = useNavigate();
   const [zone, setZone] = useState({
-    firmId: "",
-    zone: "",
+    zoneId: new URLSearchParams(window.location.search).get("zone"),
+    sensorName: "",
   });
 
   const [moisture, setMoisture] = useState(uniqueVisitorChart);
@@ -32,7 +32,25 @@ const ZoneSensor = () => {
 
   const handleZoneCreation = async (e) => {
     e.preventDefault();
-    console.log("zone sensor created");
+    try {
+      await axios.post(
+        "https://api.web-project.in/agriculture/zones/create-sensor",
+        {
+          sensorName: zone.sensorName,
+          zoneId: zone.zoneId,
+        },
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      fetchSensorsByZoneID(
+        localStorage.getItem("username"),
+        token,
+        new URLSearchParams(window.location.search).get("zone")
+      );
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const fetchSensorsByZoneID = async (username, token, zoneId) => {
@@ -87,10 +105,18 @@ const ZoneSensor = () => {
       const categories = response.data.map((data) =>
         convertTimestamp(data.timestamp)
       );
+      console.log(categories);
 
       setMoisture({
         ...moisture,
         series: series,
+        options: {
+          ...moisture.options,
+          xaxis: {
+            ...moisture.options.xaxis,
+            categories: categories,
+          },
+        },
       });
 
       setSelectedSensors({
@@ -117,14 +143,12 @@ const ZoneSensor = () => {
   };
 
   const convertTimestamp = (timestamp) => {
-    // 2024-07-28T19:42:11+05:30 => mm/dd/yyyy
+    // 2024-07-28T19:42:11+05:30 => mm/dd/yyyy hh:mm
     const date = new Date(timestamp);
-    return `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
+    return `${
+      date.getMonth() + 1
+    }/${date.getDate()}/${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}`;
   };
-
-  useEffect(() => {
-    console.log(moisture);
-  }, [moisture]);
 
   useEffect(() => {
     const localToken = sessionStorage.getItem("i_token");
@@ -166,7 +190,7 @@ const ZoneSensor = () => {
               <h3 style={{ marginLeft: "10px" }}>Add Sensor</h3>
               <Part1>
                 {/* add a select option */}
-                <Formitem>
+                {/* <Formitem>
                   <label htmlFor="zone">Sensor Type</label>
                   <select
                     name="zone"
@@ -185,16 +209,16 @@ const ZoneSensor = () => {
                       </option>
                     ))}
                   </select>
-                </Formitem>
+                </Formitem> */}
                 <Formitem>
                   <label htmlFor="zone">Sensor Name</label>
                   <input
                     type="text"
-                    placeholder="Add Zone"
+                    placeholder="Give a name to the sensor"
                     onChange={(e) =>
                       setZone({
                         ...zone,
-                        zone: e.target.value,
+                        sensorName: e.target.value,
                       })
                     }
                   />

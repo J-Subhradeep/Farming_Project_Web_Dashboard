@@ -18,20 +18,8 @@ const chartData = {
       position: "top",
     },
     xaxis: {
-      type: "date",
-      categories: [
-        "7/28/2024",
-        "7/28/2024",
-        "7/28/2024",
-        "7/28/2024",
-        "7/28/2024",
-        "7/28/2024",
-        "7/28/2024",
-        "7/29/2024",
-        "7/29/2024",
-        "7/29/2024",
-        "7/29/2024",
-      ],
+      type: "datetime",
+      categories: [],
       axisBorder: {
         show: false,
       },
