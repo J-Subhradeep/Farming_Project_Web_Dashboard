@@ -270,7 +270,6 @@ const Table = styled.table`
     background-color: ${greenishblue};
     color: white;
     padding: 10px;
-
     border-right: 1px solid ${greenishwhite};
   }
 
