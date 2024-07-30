@@ -1,14 +1,21 @@
 import React, { useState, useEffect } from "react";
 import LeftSidebar from "../leftsidebar/Leftsidebar";
 import { greenishblue, greenishwhite } from "../../config";
+import GetWorkerList from "../Worker/GetWorkerList";
 
 import styled from "@emotion/styled";
 import { MdAppRegistration, MdKeyboardArrowRight } from "react-icons/md";
 import { FaUser } from "react-icons/fa";
-import OpenInNewIcon from '@mui/icons-material/OpenInNew';
+import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
-import { Button, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import {
+  Button,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+} from "@mui/material";
 
 const Zonemangement = () => {
   const navigator = useNavigate();
@@ -18,7 +25,7 @@ const Zonemangement = () => {
   });
 
   let [farms, setFarms] = useState([]);
-  const [zoneName, setZoneName] = useState('');
+  const [zoneName, setZoneName] = useState("");
 
   const [token, setToken] = useState("");
 
@@ -137,8 +144,6 @@ const Zonemangement = () => {
                       </option>
                     ))}
                   </select>
-
-
                 </Formitem>
                 <Formitem>
                   <label htmlFor="zone">Zone</label>
@@ -184,24 +189,29 @@ const Zonemangement = () => {
           </Additem>
           <ListItems>
             <Formitem>
-              <label htmlFor="zone">
-                Get Zone Details
-              </label>           
-              <FormControl style={{ "width": "30rem" }}>
-                <InputLabel id="demo-simple-select-label">Select Farm Name</InputLabel>
+              <label htmlFor="zone">Get Zone Details</label>
+              <FormControl style={{ width: "30rem" }}>
+                <InputLabel id="demo-simple-select-label">
+                  Select Farm Name
+                </InputLabel>
                 <Select
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
                   value={zoneName}
                   label="Select Farm Name"
                   onChange={(e) => {
-                    getZoneByFarmId(e.target.value, token, "e.target.value.name")
-                    setZoneName(e.target.value)
-                  }
-                  }
+                    getZoneByFarmId(
+                      e.target.value,
+                      token,
+                      "e.target.value.name"
+                    );
+                    setZoneName(e.target.value);
+                  }}
                 >
                   {farms.map((farm) => (
-                    <MenuItem key={farm.id} value={farm.id}>{farm.name}</MenuItem>
+                    <MenuItem key={farm.id} value={farm.id}>
+                      {farm.name}
+                    </MenuItem>
                   ))}
                 </Select>
               </FormControl>
@@ -221,8 +231,13 @@ const Zonemangement = () => {
                       <td>{zone.name}</td>
                       <td>
                         <Link to={`/zone-sensor-action?zone=${zone.id}`}>
-                          <span style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
-
+                          <span
+                            style={{
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                            }}
+                          >
                             Zone Dashboard &nbsp; <OpenInNewIcon />
                           </span>
                         </Link>
@@ -233,9 +248,11 @@ const Zonemangement = () => {
               </Table>
             )}
           </ListItems>
+
+          <GetWorkerList />
         </Wrapper>
       </Zonecontainer>
-    </Contianer >
+    </Contianer>
   );
 };
 const Contianer = styled.div`
@@ -246,12 +263,13 @@ const Contianer = styled.div`
   width: 100%;
   height: 100vh;
   background-color: #f5f6fa;
-  overflow: hidden;
 `;
 
 const Zonecontainer = styled.div`
   width: 90%;
   padding: 10px;
+
+  overflow: scroll;
 `;
 
 const NavigateList = styled.ul`
