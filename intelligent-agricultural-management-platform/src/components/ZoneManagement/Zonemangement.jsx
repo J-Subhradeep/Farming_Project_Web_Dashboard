@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import LeftSidebar from "../leftsidebar/Leftsidebar";
 import { greenishblue, greenishwhite } from "../../config";
 import GetWorkerList from "../Worker/GetWorkerList";
-
+import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
 import styled from "@emotion/styled";
 import { MdAppRegistration, MdKeyboardArrowRight } from "react-icons/md";
 import { FaUser } from "react-icons/fa";
@@ -177,12 +177,12 @@ const Zonemangement = () => {
                 <Button
                   color="success"
                   variant="contained"
-                  endIcon={<FaUser />}
+                  endIcon={<PersonAddAltIcon />}
                   onClick={() => {
                     navigator("/create-worker");
                   }}
                 >
-                  Create Worker
+                  Register Worker
                 </Button>
               </div>
             </MainForm>
