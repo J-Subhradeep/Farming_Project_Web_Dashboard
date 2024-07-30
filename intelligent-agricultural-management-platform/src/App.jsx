@@ -29,14 +29,16 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Home />} />
-            {/* <Route path="/about" element={<About />} /> */}
             <Route path="/login" element={<Login />} />
             <Route path="/create-account" element={<Register />} />
             <Route path="/zone-management" element={<ZoneManagement />} />
             <Route path="/farm-management" element={<FarmMangement />} />
             <Route path="/zone-sensor-action" element={<ZoneSensor />} />
+
+            <Route path="*" element={<h1>Coming Soon...</h1>} />
+
             <Route path="/create-worker" element={<CreateWorker />} />
-            <Route path="*" element={<h1>Not Found</h1>} />
+
           </Routes>
         </BrowserRouter>
       </ThemeProvider>

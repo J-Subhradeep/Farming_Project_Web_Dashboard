@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 
 import Chart from "react-apexcharts";
@@ -7,72 +7,43 @@ import customerChart from "../chart/analytics-cuatomer-chart";
 import customerChart1 from "../chart/analytics-cuatomer-chart-1";
 import { Paper } from "@mui/material";
 import axios from "axios";
+import WeatherCard from "./WeatherCard";
 
 const Dashboard = () => {
 
   const API_KEY = 'fc381e1e64ef7f3ebe3c5673ba78fef3'; // Replace with your API key
 
+  const [weatherData, setWeatherData] = useState({
+    main: { temp: "", feels_like: "", humidity: "", temp_max: "", temp_min: ""},
+    weather: [{ main: "", description: "" }],
+    wind: { speed: "" },
+    sys: { country: "" }
+  })
+
   const fetchWeather = async () => {
     try {
       const response = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=Kolkata&appid=${API_KEY}`);
-
+      setWeatherData(response.data);
       console.log(response.data);
+      return response.data;
     }
     catch
     (error) {
       console.log(error.message);
     }
   };
+  useEffect(() => {
 
-  fetchWeather();
+    fetchWeather();
+
+    return () => {
+
+    }
+  }, [])
+
 
   return (
     <Container>
-      {/* <div style={{marginTop:"25rem", marginBottom:"1rem"}}>
-
-      <Wrapper>
-        <CardDashboard
-          color="linear-gradient(45deg, #4099ff, #73b4ff)"
-          h6title="Total Orders"
-          value="100"
-          text1="Total orders in this month"
-          text2="View Details"
-          mxwidth="15rem"
-          />
-        <CardDashboard
-          color="linear-gradient(45deg, #ff5252, #ff7d7d)"
-          h6title="Total Revenue"
-          value="$5000"
-          text1="Total revenue in this month"
-          text2="View Details"
-          mxwidth="15rem"
-          />
-        <CardDashboard
-          color="linear-gradient(45deg, #0abb87, #3cd3a3)"
-          h6title="Total Users"
-          value="500"
-          text1="Total users in this month"
-          text2="View Details"
-          mxwidth="15rem"
-          />
-        <CardDashboard
-          color="linear-gradient(45deg, #f77e53, #fb9e7e)"
-          h6title="Total Sales"
-          value="200"
-          text1="Total sales in this month"
-          text2="View Details"
-          mxwidth="15rem"
-          />
-      </Wrapper>
-      </div>
-      <Wrapper>
-
-        <Paper elevation={3} style={{ width: "100%", minHeight: "70vh", marginBottom: "5rem", marginLeft: "2rem", marginRight: "2rem" }}>
-
-
-        </Paper>
-      </Wrapper> */}
-
       <Wrapper ht="250px">
         <CardDashboard
           color="linear-gradient(45deg, #4099ff, #73b4ff)"
@@ -113,7 +84,7 @@ const Dashboard = () => {
       </Wrapper >
 
       <Wrapper ht="250px">
-
+        <WeatherCard weatherData={weatherData}></WeatherCard>
       </Wrapper>
     </Container>
   );
@@ -147,7 +118,7 @@ const CardDashboard = ({
 export default Dashboard;
 
 const Container = styled.div`
-  background: red;
+  /* background: red; */
   height:100%;
   width: 100%;
   padding:10px;
@@ -162,7 +133,7 @@ const Wrapper = styled.div`
   gap: 10px;
   margin-bottom: 1rem;
   min-height: ${(props) => props.ht};
-  background-color:white;
+  /* background-color:white; */
   width:100%;
   position: relative;
 `;
