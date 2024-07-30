@@ -5,7 +5,10 @@ import { IoHomeOutline } from "react-icons/io5";
 import { RxComponent1 } from "react-icons/rx";
 import { MdManageAccounts } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
+import LogoutIcon from '@mui/icons-material/Logout';
 import { greenishblue, greenishwhite } from "../../config";
+import Items from "./Items";
+import { Button } from "@mui/material";
 
 // Sidebar container
 
@@ -17,73 +20,17 @@ const LeftSidebar = () => {
     navigate("/login");
   };
 
+
   return (
     <SidebarContainer>
-      <SectionTitle>Navigation</SectionTitle>
-      <Devider />
-      <SectionLink>
-        <Link to="/">
-          <IoHomeOutline /> Dashboard
-        </Link>
-      </SectionLink>
-      <Devider />
-      <SectionLink>
-        <Link to="/farm-management">
-          <MdManageAccounts />
-          Farm Management
-        </Link>
-      </SectionLink>
-      <Devider />
-      <SectionLink>
-        <Link to="/zone-management">
-          <RxComponent1 />
-          Zone Management
-        </Link>
-      </SectionLink>
-      <Devider />
-      <SectionLink>
-        <Link to="#">
-          <RxComponent1 />
-          Irrigation Systems
-        </Link>
-      </SectionLink>
-      <Devider />
-      <SectionLink>
-        <Link to="#">
-          <RxComponent1 />
-          Soil Sensors
-        </Link>
-      </SectionLink>
-      {/* <Section>
-        <SectionTitle>Navigation</SectionTitle>
-        <SectionLink href="#">
-          <SectionLink href="#">
-            <IoHomeOutline /> Dashboard
-          </SectionLink>
-        </SectionLink>
-      </Section>
+      <SectionTitle>Menu Bar</SectionTitle>
+
+      <Items />
       <Devider />
       <Section>
-        <SectionTitle>Utilities</SectionTitle>
-        <SectionLink href="#">
-          <RxComponent1 />
-          Component
-        </SectionLink>
-      </Section>
-      <Devider />
-      <Section>
-        <SectionTitle>Support</SectionTitle>
-        <SectionLink href="#">Sample Page</SectionLink>
-        <Devider />
-        <SectionLink href="#">Documentation</SectionLink>
-      </Section>
-      <Devider />
-       */}
-      <Devider />
-      <Section>
-        <SectionTitle>Authentication</SectionTitle>
+        {/* <SectionTitle>Authentication</SectionTitle> */}
         <br />
-        <SectionLink onClick={HandleLogout}>Logout</SectionLink>
+        <Button color="error" variant="outlined" fullWidth onClick={HandleLogout} endIcon={<LogoutIcon />}>Logout</Button>
       </Section>
     </SidebarContainer>
   );
