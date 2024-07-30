@@ -4,12 +4,11 @@ import { greenishblue, greenishwhite } from "../../config";
 
 import styled from "@emotion/styled";
 import { MdAppRegistration, MdKeyboardArrowRight } from "react-icons/md";
-// react icon user icon
 import { FaUser } from "react-icons/fa";
-
+import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
-import { Button } from "@mui/material";
+import { Button, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 
 const Zonemangement = () => {
   const navigator = useNavigate();
@@ -18,7 +17,8 @@ const Zonemangement = () => {
     zone: "",
   });
 
-  const [farms, setFarms] = useState([]);
+  let [farms, setFarms] = useState([]);
+  const [zoneName, setZoneName] = useState('');
 
   const [token, setToken] = useState("");
 
@@ -137,6 +137,8 @@ const Zonemangement = () => {
                       </option>
                     ))}
                   </select>
+
+
                 </Formitem>
                 <Formitem>
                   <label htmlFor="zone">Zone</label>
@@ -183,39 +185,33 @@ const Zonemangement = () => {
           <ListItems>
             <Formitem>
               <label htmlFor="zone">
-                Select Farm name to get the zone details
-              </label>
-              <select
-                name="zone"
-                id="zone"
-                style={{
-                  padding: "10px",
-                  border: "1px solid #333",
-                  borderRadius: "5px",
-                  width: "50%",
-                }}
-                onChange={(e) =>
-                  getZoneByFarmId(
-                    e.target.value,
-                    token,
-                    e.target.options[e.target.selectedIndex].text
-                  )
-                }
-              >
-                <option value="">Select Firm ID</option>
-                {farms.map((farm) => (
-                  <option key={farm.id} value={farm.id}>
-                    {farm.name}
-                  </option>
-                ))}
-              </select>
+                Get Zone Details
+              </label>           
+              <FormControl style={{ "width": "30rem" }}>
+                <InputLabel id="demo-simple-select-label">Select Farm Name</InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={zoneName}
+                  label="Select Farm Name"
+                  onChange={(e) => {
+                    getZoneByFarmId(e.target.value, token, "e.target.value.name")
+                    setZoneName(e.target.value)
+                  }
+                  }
+                >
+                  {farms.map((farm) => (
+                    <MenuItem key={farm.id} value={farm.id}>{farm.name}</MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
             </Formitem>
             {zones.length != 0 && (
               <Table>
                 <thead>
                   <tr>
                     <th>Zone Name</th>
-                    <th>Farm Name</th>
+
                     <th>Actions</th>
                   </tr>
                 </thead>
@@ -223,10 +219,12 @@ const Zonemangement = () => {
                   {zones.map((zone) => (
                     <tr key={zone.id}>
                       <td>{zone.name}</td>
-                      <td>{zone.farmName}</td>
                       <td>
                         <Link to={`/zone-sensor-action?zone=${zone.id}`}>
-                          Action
+                          <span style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+
+                            Zone Dashboard &nbsp; <OpenInNewIcon />
+                          </span>
                         </Link>
                       </td>
                     </tr>
@@ -237,7 +235,7 @@ const Zonemangement = () => {
           </ListItems>
         </Wrapper>
       </Zonecontainer>
-    </Contianer>
+    </Contianer >
   );
 };
 const Contianer = styled.div`
