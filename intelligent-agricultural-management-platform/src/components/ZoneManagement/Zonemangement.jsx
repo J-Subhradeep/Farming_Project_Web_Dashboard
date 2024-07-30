@@ -3,10 +3,11 @@ import LeftSidebar from "../leftsidebar/Leftsidebar";
 import { greenishblue, greenishwhite } from "../../config";
 
 import styled from "@emotion/styled";
-import { MdKeyboardArrowRight } from "react-icons/md";
+import { MdAppRegistration, MdKeyboardArrowRight } from "react-icons/md";
 
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { Button } from "@mui/material";
 
 const Zonemangement = () => {
   const [zone, setZone] = useState({
@@ -148,7 +149,9 @@ const Zonemangement = () => {
                   />
                 </Formitem>
               </Part1>
-              <button type="submit">Add</button>
+              <Button color="primary" variant="contained" type="submit" endIcon={<MdAppRegistration />}>
+                Register Zone
+              </Button>
             </MainForm>
           </Additem>
           <ListItems>
@@ -285,11 +288,8 @@ const MainForm = styled.form`
   button {
     padding: 10px;
     border: none;
-    border-radius: 5px;
-    background-color: ${greenishblue};
     color: white;
-    width: 10%;
-    // place-self: flex-end;
+    width: 20rem;
     margin-left: 10px;
     cursor: pointer;
   }
