@@ -102,6 +102,7 @@ const CreateWorker = () => {
   };
   useEffect(() => {
     if (token) getTheFarms(localStorage.getItem("username"));
+
   }, [token]);
 
   useEffect(() => {
@@ -158,7 +159,6 @@ const CreateWorker = () => {
                     }
                   >
                     <option value="">Select Role</option>
-                    <option value="ADMIN">Admin</option>
                     <option value="WORKER">Worker</option>
                   </select>
                 </Formitem>
@@ -309,6 +309,7 @@ const Contianer = styled.div`
 const Zonecontainer = styled.div`
   width: 90%;
   padding: 10px;
+  overflow-y:scroll
 `;
 
 const NavigateList = styled.ul`

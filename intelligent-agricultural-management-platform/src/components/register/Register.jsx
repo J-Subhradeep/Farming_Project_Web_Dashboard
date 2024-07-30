@@ -42,20 +42,22 @@ const Register = () => {
         })
         .catch((error) => {
           console.log(error);
+          alert("Registration Failed");
         });
     } catch (err) {
       console.log(err);
+      alert("Registration Failed");
     }
   };
 
   return (
     <Container>
       <LeftPane>
-        <img src={login} alt="AGRICULTURE Management Service" />
+        <img src={login} alt="AGRICULTURE-image" />
       </LeftPane>
       <RightPane>
         <FormContainer>
-          <Title>AGRICULTURE Management Service</Title>
+          <Title>Manager Dashboard</Title>
           <form onSubmit={handleRegistration}>
             <Input
               type="text"

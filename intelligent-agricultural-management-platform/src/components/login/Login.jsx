@@ -44,6 +44,7 @@ const Login = () => {
         })
         .catch((error) => {
           console.log(error);
+          alert("Authentication Error")
         });
     } catch (err) {
       console.log(err);
@@ -53,11 +54,11 @@ const Login = () => {
   return (
     <Container>
       <LeftPane>
-        <img src={login} alt="AGRICULTURE Management Service" />
+        <img src={login} alt="AGRICULTURE-image" />
       </LeftPane>
       <RightPane>
         <FormContainer>
-          <Title>AGRICULTURE Management Service</Title>
+          <Title>Manager Dashboard</Title>
           <form onSubmit={handleLogin}>
             <Input
               type="text"
