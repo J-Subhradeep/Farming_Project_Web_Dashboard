@@ -44,7 +44,7 @@ const Items = () => {
             </Link>
 
             <Link to="/">
-                <ListItemButton>
+                <ListItemButton onClick={(e) => alert(`This feature is coming soon...`)}>
                     <ListItemIcon>
                         <WaterDropIcon />
                     </ListItemIcon>
@@ -53,7 +53,7 @@ const Items = () => {
             </Link>
 
             <Link to="/">
-                <ListItemButton>
+                <ListItemButton onClick={(e) => alert(`This feature is coming soon...`)}>
                     <ListItemIcon>
                         <SensorsIcon />
                     </ListItemIcon>
