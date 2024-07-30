@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import { greenishblue, greenishwhite } from "../../config";
 import { MdAppRegistration } from "react-icons/md";
-
+import FormatListNumberedIcon from '@mui/icons-material/FormatListNumbered';
 import { useNavigate } from "react-router-dom";
 
 import axios from "axios";
@@ -98,7 +98,7 @@ const GetWorkerList = () => {
 
   return (
     <ListItems>
-      <label htmlFor="zone">Get Zone Details</label>
+      <label htmlFor="zone">Get The Details Of Workers</label>
       <Formitem>
         <FormControl style={{ width: "30rem" }}>
           <InputLabel id="demo-simple-select-label">
@@ -146,7 +146,7 @@ const GetWorkerList = () => {
         color="primary"
         variant="contained"
         type="submit"
-        endIcon={<MdAppRegistration />}
+        endIcon={<FormatListNumberedIcon />}
         style={{ margin: "10px" }}
         onClick={getWorkerList}
       >
