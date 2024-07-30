@@ -3,6 +3,7 @@ import Chart from "react-apexcharts";
 import LeftSidebar from "../leftsidebar/Leftsidebar";
 import uniqueVisitorChart from "../chart/analytics-unique-visitor-chart";
 import { greenishblue, greenishwhite } from "../../config";
+import moment from "moment-timezone";
 
 import styled from "@emotion/styled";
 import { MdKeyboardArrowRight } from "react-icons/md";
@@ -92,32 +93,28 @@ const ZoneSensor = () => {
         const index = series.findIndex((item) => item.name === data.sensorName);
 
         if (index !== -1) {
-          series[index].data.push(data.moistureLevel);
+          series[index].data.push([
+            convertTimestamp(data.timestamp),
+            data.moistureLevel,
+          ]);
         } else {
           series.push({
             name: data.sensorName,
-            data: [data.moistureLevel],
+            data: [[convertTimestamp(data.timestamp), data.moistureLevel]],
           });
         }
       });
 
       // change xaixs categories
-      const categories = response.data.map((data) =>
-        convertTimestamp(data.timestamp)
-      );
+      // const categories = response.data.map((data) =>
+      //   convertTimestamp(data.timestamp)
+      // );
 
       // sort the data
 
       setMoisture({
         ...moisture,
         series: series,
-        options: {
-          ...moisture.options,
-          xaxis: {
-            ...moisture.options.xaxis,
-            categories: categories,
-          },
-        },
       });
 
       setSelectedSensors({
@@ -144,14 +141,32 @@ const ZoneSensor = () => {
   };
 
   const convertTimestamp = (timestamp) => {
-    // 2024-07-28T19:42:11+05:30 => mm/dd/yyyy hh:mm
-
-    const date = new Date(timestamp);
-    // return date;
-    return `${date.getDate()}/${date.getMonth()}/${date.getFullYear()} ${date.getHours()}:${
-      date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes()
-    }`;
+    // Parse the timestamp and convert it to the desired time zone
+    const date = moment(timestamp).tz("Asia/Kolkata");
+    return date.format("YYYY-MM-DDTHH:mm:ss");
   };
+
+  // const convertTimestamp = (timestamp) => {
+  //   // 2024-07-28T19:42:11+05:30 to 2024-07-28T00:42:11 means add 5:30 hours to the timestamp
+
+  //   const date = new Date(timestamp);
+
+  //   // add 5:30 hours to the timestamp
+  //   date.setHours(date.getHours() + 5);
+  //   date.setMinutes(date.getMinutes() + 30);
+
+  //   const hours = date.getHours();
+  //   const minutes = date.getMinutes();
+  //   const seconds = date.getSeconds();
+  //   const month = date.getMonth() + 1;
+  //   const day = date.getDate();
+  //   const year = date.getFullYear();
+  //   return `${year}-${month < 10 ? `0${month}` : month}-${
+  //     day < 10 ? `0${day}` : day
+  //   }T${hours < 10 ? `0${hours}` : hours}:${
+  //     minutes < 10 ? `0${minutes}` : minutes
+  //   }:${seconds < 10 ? `0${seconds}` : seconds}`;
+  // };
 
   useEffect(() => {
     const localToken = sessionStorage.getItem("i_token");
@@ -173,7 +188,6 @@ const ZoneSensor = () => {
 
   useEffect(() => {
     console.log(moisture);
-    console.log(selectedSensors);
   }, [moisture, selectedSensors]);
 
   return (

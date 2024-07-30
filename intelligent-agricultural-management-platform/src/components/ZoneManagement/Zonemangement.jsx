@@ -4,12 +4,15 @@ import { greenishblue, greenishwhite } from "../../config";
 
 import styled from "@emotion/styled";
 import { MdAppRegistration, MdKeyboardArrowRight } from "react-icons/md";
+// react icon user icon
+import { FaUser } from "react-icons/fa";
 
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@mui/material";
 
 const Zonemangement = () => {
+  const navigator = useNavigate();
   const [zone, setZone] = useState({
     firmId: "",
     zone: "",
@@ -149,9 +152,32 @@ const Zonemangement = () => {
                   />
                 </Formitem>
               </Part1>
-              <Button color="primary" variant="contained" type="submit" endIcon={<MdAppRegistration />}>
-                Register Zone
-              </Button>
+              <div
+                style={{
+                  display: "flex",
+                  gap: "10px",
+                  // justifyContent: "center",
+                }}
+              >
+                <Button
+                  color="primary"
+                  variant="contained"
+                  type="submit"
+                  endIcon={<MdAppRegistration />}
+                >
+                  Register Zone
+                </Button>
+                <Button
+                  color="success"
+                  variant="contained"
+                  endIcon={<FaUser />}
+                  onClick={() => {
+                    navigator("/create-worker");
+                  }}
+                >
+                  Create Worker
+                </Button>
+              </div>
             </MainForm>
           </Additem>
           <ListItems>
