@@ -74,10 +74,10 @@ const Dashboard = () => {
         />
         <CardDashboard
           color="linear-gradient(45deg, #ee3b3b, #f87660)"
-          h6title="Total Number of Sesnsors"
+          h6title="Total Number of Sesnsor"
           value="25"
           height="160px"
-          text1="Soil Sensors Details"
+          text1="Soil Sensor Details"
           text2="View Details"
           mxwidth="15rem"
         />
