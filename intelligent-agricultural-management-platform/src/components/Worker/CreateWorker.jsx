@@ -102,7 +102,6 @@ const CreateWorker = () => {
   };
   useEffect(() => {
     if (token) getTheFarms(localStorage.getItem("username"));
-
   }, [token]);
 
   useEffect(() => {
@@ -309,7 +308,7 @@ const Contianer = styled.div`
 const Zonecontainer = styled.div`
   width: 90%;
   padding: 10px;
-  overflow-y:scroll
+  overflow-y: scroll;
 `;
 
 const NavigateList = styled.ul`
