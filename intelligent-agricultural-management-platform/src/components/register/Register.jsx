@@ -75,7 +75,7 @@ const Register = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
-            <Button type="submit">Register</Button>
+            <Button fullWidth variant="contained" type="submit">Register</Button>
           </form>
           <LinkText to="/forgot-password">Forgot Password?</LinkText>
           <LinkText to="/login">Login</LinkText>

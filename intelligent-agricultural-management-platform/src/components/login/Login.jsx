@@ -6,6 +6,7 @@ import { greenishblue, greenishwhite } from "../../config";
 // image import
 import login from "../../assets/login.png";
 import axios from "axios";
+import { Button } from "@mui/material";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -70,7 +71,7 @@ const Login = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
-            <Button type="submit">Login</Button>
+            <Button fullWidth variant="contained" type="submit">Login</Button>
           </form>
           <LinkText to="/forgot-password">Forgot Password?</LinkText>
           <LinkText to="/create-account">Create Account</LinkText>
@@ -129,20 +130,6 @@ const Input = styled.input`
   font-size: 16px;
 `;
 
-const Button = styled.button`
-  width: 100%;
-  padding: 0.75rem;
-  background-color: ${greenishblue};
-  color: white;
-  border: none;
-  border-radius: 4px;
-  font-size: 16px;
-  cursor: pointer;
-
-  &:hover {
-    background-color: #005f61;
-  }
-`;
 
 const LinkText = styled(Link)`
   margin-top: 1rem;
