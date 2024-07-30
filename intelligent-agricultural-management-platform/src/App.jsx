@@ -12,12 +12,13 @@ import ZoneSensor from "./components/ZoneSensorActionPage/ZoneSensor";
 import { createTheme } from "@mui/material";
 import { ThemeProvider } from "@emotion/react";
 import { greenishblue } from "./config";
+import CreateWorker from "./components/Worker/CreateWorker";
 const theme = createTheme({
   palette: {
     primary: {
-      main: greenishblue
-    }
-  }
+      main: greenishblue,
+    },
+  },
 });
 function App() {
   const [count, setCount] = useState(0);
@@ -33,7 +34,11 @@ function App() {
             <Route path="/zone-management" element={<ZoneManagement />} />
             <Route path="/farm-management" element={<FarmMangement />} />
             <Route path="/zone-sensor-action" element={<ZoneSensor />} />
+
             <Route path="*" element={<h1>Coming Soon...</h1>} />
+
+            <Route path="/create-worker" element={<CreateWorker />} />
+
           </Routes>
         </BrowserRouter>
       </ThemeProvider>
