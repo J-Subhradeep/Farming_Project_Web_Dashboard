@@ -155,19 +155,19 @@ const GetWorkerList = () => {
       <Table>
         <thead>
           <tr>
+            <th>Username</th>
             <th>Worker Name</th>
             <th>Phone Number</th>
-            <th>Actions</th>
+            <th>Email</th>
           </tr>
         </thead>
         <tbody>
           {workers.map((worker) => (
             <tr key={worker.id}>
+              <td>{worker.username}</td>
               <td>{worker.name}</td>
-              <td>{worker.phone}</td>
-              <td>
-                <a href="#">View Details</a>
-              </td>
+              <td>{worker.mobile}</td>
+              <td>{worker.email}</td>
             </tr>
           ))}
         </tbody>

@@ -263,12 +263,13 @@ const Contianer = styled.div`
   width: 100%;
   height: 100vh;
   background-color: #f5f6fa;
-  overflow: hidden;
 `;
 
 const Zonecontainer = styled.div`
   width: 90%;
   padding: 10px;
+
+  overflow: scroll;
 `;
 
 const NavigateList = styled.ul`
