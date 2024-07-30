@@ -5,7 +5,7 @@ import Chart from "react-apexcharts";
 import uniqueVisitorChart from "../chart/analytics-unique-visitor-chart";
 import customerChart from "../chart/analytics-cuatomer-chart";
 import customerChart1 from "../chart/analytics-cuatomer-chart-1";
-import { Paper } from "@mui/material";
+import { Button, Paper, Typography } from "@mui/material";
 import axios from "axios";
 import WeatherCard from "./WeatherCard";
 
@@ -14,7 +14,7 @@ const Dashboard = () => {
   const API_KEY = 'fc381e1e64ef7f3ebe3c5673ba78fef3'; // Replace with your API key
 
   const [weatherData, setWeatherData] = useState({
-    main: { temp: "", feels_like: "", humidity: "", temp_max: "", temp_min: ""},
+    main: { temp: "", feels_like: "", humidity: "", temp_max: "", temp_min: "" },
     weather: [{ main: "", description: "" }],
     wind: { speed: "" },
     sys: { country: "" }
@@ -47,43 +47,46 @@ const Dashboard = () => {
       <Wrapper ht="250px">
         <CardDashboard
           color="linear-gradient(45deg, #4099ff, #73b4ff)"
-          h6title="Total Orders"
-          value="100"
-          height="180px"
-          text1="Total orders in this month"
+          h6title="Total Registered Farms"
+          value="2"
+          height="160px"
+          text1="Farm Management"
           text2="View Details"
           mxwidth="15rem"
         />
         <CardDashboard
           color="linear-gradient(45deg, #772be8, #ab73ff)"
-          h6title="Total Orders"
-          value="100"
-          height="180px"
-          text1="Total orders in this month"
+          h6title="Total Registered Zones"
+          value="20"
+          height="160px"
+          text1="Zone Management"
           text2="View Details"
           mxwidth="15rem"
         />
         <CardDashboard
           color="linear-gradient(45deg, #0fb882, #08d0d0)"
-          h6title="Total Orders"
+          h6title="Total Farm Workers"
           value="100"
-          height="180px"
-          text1="Total orders in this month"
+          height="160px"
+          text1="10 New Workers Joined"
           text2="View Details"
           mxwidth="15rem"
         />
         <CardDashboard
           color="linear-gradient(45deg, #ee3b3b, #f87660)"
-          h6title="Total Orders"
-          value="100"
-          height="180px"
-          text1="Total orders in this month"
+          h6title="Total Number of Sesnsors"
+          value="25"
+          height="160px"
+          text1="Soil Sensors Details"
           text2="View Details"
           mxwidth="15rem"
         />
       </Wrapper >
 
       <Wrapper ht="250px">
+        <Typography variant="body1" textAlign="center" paddingX={4}>
+          Temperature, humidity, wind speed, and other weather conditions are crucial for farm managers to optimize crop growth, prevent losses, and make informed decisions about irrigation, pest control, and harvesting.
+        </Typography>
         <WeatherCard weatherData={weatherData}></WeatherCard>
       </Wrapper>
     </Container>
@@ -109,7 +112,7 @@ const CardDashboard = ({
       </Texth2>
       <Text className="mb-0">
         {text1}
-        <Textspan className="float-end">{text2}</Textspan>
+        <Button variant="contained" color="info" onClick={(e) => alert(`Currently the cards contain dummy data, we will update it soon with real-time data, Thank You !!!`)}>Details</Button>
       </Text>
     </Card>
   );
