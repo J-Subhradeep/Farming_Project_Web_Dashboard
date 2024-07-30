@@ -27,7 +27,7 @@ const Contianer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  width: 100%;
+  width: 100vw;
   height: 100vh;
   background-color: #f5f6fa;
   overflow: hidden;
