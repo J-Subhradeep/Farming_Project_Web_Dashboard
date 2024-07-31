@@ -10,6 +10,13 @@ import { MdKeyboardArrowRight } from "react-icons/md";
 
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
+import {
+  Button,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+} from "@mui/material";
 
 const ZoneSensor = () => {
   const navigate = useNavigate();
@@ -256,6 +263,7 @@ const ZoneSensor = () => {
                   <tr>
                     <th>Sensor Name</th>
                     <th>Actions</th>
+                    <th>Copy Sensor ID</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -273,6 +281,18 @@ const ZoneSensor = () => {
                               addSensorIdToArray(sensor.sensorId)
                             }
                           />
+                        </td>
+                        <td>
+                          {/* copy sensor id to clipborad*/}
+                          <Button
+                            variant="contained"
+                            onClick={() => {
+                              navigator.clipboard.writeText(sensor.sensorId);
+                            }}
+                            style={{ width: "auto" }}
+                          >
+                            Copy Sensor ID
+                          </Button>
                         </td>
                       </tr>
                     ))}

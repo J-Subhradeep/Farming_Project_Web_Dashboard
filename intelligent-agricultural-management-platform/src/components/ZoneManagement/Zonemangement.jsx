@@ -6,6 +6,7 @@ import GetWorkerList from "../Worker/GetWorkerList";
 import styled from "@emotion/styled";
 import { MdAppRegistration, MdKeyboardArrowRight } from "react-icons/md";
 import { FaUser } from "react-icons/fa";
+import { AiOutlineSetting } from "react-icons/ai";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
@@ -184,6 +185,16 @@ const Zonemangement = () => {
                 >
                   Create Worker
                 </Button>
+                {/* <Button
+                  color="primary"
+                  variant="contained"
+                  endIcon={<AiOutlineSetting />}
+                  onClick={() => {
+                    navigator("/create-sensor");
+                  }}
+                >
+                  Create Sensor
+                </Button> */}
               </div>
             </MainForm>
           </Additem>
