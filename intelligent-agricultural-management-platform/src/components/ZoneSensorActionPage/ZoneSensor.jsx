@@ -4,7 +4,7 @@ import LeftSidebar from "../leftsidebar/Leftsidebar";
 import uniqueVisitorChart from "../chart/analytics-unique-visitor-chart";
 import { greenishblue, greenishwhite } from "../../config";
 import moment from "moment-timezone";
-
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import styled from "@emotion/styled";
 import { MdKeyboardArrowRight } from "react-icons/md";
 
@@ -16,6 +16,8 @@ import {
   InputLabel,
   MenuItem,
   Select,
+  colors,
+  IconButton
 } from "@mui/material";
 
 const ZoneSensor = () => {
@@ -75,7 +77,7 @@ const ZoneSensor = () => {
           console.log(res.data);
         });
     } catch (err) {
-    } finally {
+      console.log(err);
     }
   };
 
@@ -227,11 +229,11 @@ const ZoneSensor = () => {
                     onChange={(e) =>
                       setZone({
                         ...zone,
-                        firmId: e.target.value,
+                        farmId: e.target.value,
                       })
                     }
                   >
-                    <option value="">Select Firm ID</option>
+                    <option value="">Select Farm ID</option>
                     {farms.map((farm) => (
                       <option key={farm.id} value={farm.id}>
                         {farm.name}
@@ -270,7 +272,12 @@ const ZoneSensor = () => {
                   {sensors &&
                     sensors.map((sensor) => (
                       <tr key={sensor.sensorId}>
-                        <td>{sensor.sensorName}</td>
+                        <td>{sensor.sensorName} &nbsp; <Button aria-label="delete" style={{ height: 25, width: 70, fontSize: 9, fontWeight: 600 }} variant="outlined" id="copy-button" onClick={(e) => alert(
+                          `This feature is coming soon... 
+By using the sensor IDs the actual sensors(hardware) will be mapped to the cloud database in future.
+                          `)}>
+                          Copy ID
+                        </Button></td>
 
                         <td>
                           {/* add a check box */}
@@ -359,6 +366,8 @@ const Contianer = styled.div`
   height: 100vh;
   background-color: #f5f6fa;
   overflow: hidden;
+
+
 `;
 const ZoneSensorContainer = styled.div`
   width: 90%;
@@ -452,7 +461,7 @@ const ListItems = styled.div`
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
   overflow: hidden;
-  button {
+  /* button {
     padding: 10px;
     border: none;
     border-radius: 5px;
@@ -463,7 +472,7 @@ const ListItems = styled.div`
 
     margin-right: 10px;
     cursor: pointer;
-  }
+  } */
 `;
 
 const Table = styled.table`

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import LeftSidebar from "../leftsidebar/Leftsidebar";
 import { greenishblue, greenishwhite } from "../../config";
 import GetWorkerList from "../Worker/GetWorkerList";
-
+import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
 import styled from "@emotion/styled";
 import { MdAppRegistration, MdKeyboardArrowRight } from "react-icons/md";
 import { FaUser } from "react-icons/fa";
@@ -21,7 +21,7 @@ import {
 const Zonemangement = () => {
   const navigator = useNavigate();
   const [zone, setZone] = useState({
-    firmId: "",
+    farmId: "",
     zone: "",
   });
 
@@ -40,7 +40,7 @@ const Zonemangement = () => {
         .post(
           "https://api.web-project.in/agriculture/zones/create-zone",
           {
-            farmId: zone.firmId,
+            farmId: zone.farmId,
             name: zone.zone,
           },
           { headers: { Authorization: `Bearer ${token}` } }
@@ -127,18 +127,18 @@ const Zonemangement = () => {
               <Part1>
                 {/* add a select option */}
                 <Formitem>
-                  <label htmlFor="zone">Firm ID</label>
+                  <label htmlFor="zone">Farm ID</label>
                   <select
                     name="zone"
                     id="zone"
                     onChange={(e) =>
                       setZone({
                         ...zone,
-                        firmId: e.target.value,
+                        farmId: e.target.value,
                       })
                     }
                   >
-                    <option value="">Select Firm ID</option>
+                    <option value="">Select Farm ID</option>
                     {farms.map((farm) => (
                       <option key={farm.id} value={farm.id}>
                         {farm.name}
@@ -178,12 +178,12 @@ const Zonemangement = () => {
                 <Button
                   color="success"
                   variant="contained"
-                  endIcon={<FaUser />}
+                  endIcon={<PersonAddAltIcon />}
                   onClick={() => {
                     navigator("/create-worker");
                   }}
                 >
-                  Create Worker
+                  Register Worker
                 </Button>
                 {/* <Button
                   color="primary"
