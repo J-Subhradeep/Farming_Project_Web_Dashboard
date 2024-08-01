@@ -98,7 +98,9 @@ const GetWorkerList = () => {
 
   return (
     <ListItems>
-      <label htmlFor="zone">Get The Details Of Workers</label>
+      <label htmlFor="zone" style={{ padding: "10px" }}>
+        Get Worker Details
+      </label>
       <Formitem>
         <FormControl style={{ width: "30rem" }}>
           <InputLabel id="demo-simple-select-label">
