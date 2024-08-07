@@ -272,12 +272,7 @@ const ZoneSensor = () => {
                   {sensors &&
                     sensors.map((sensor) => (
                       <tr key={sensor.sensorId}>
-                        <td>{sensor.sensorName} &nbsp; <Button aria-label="delete" style={{ height: 25, width: 70, fontSize: 9, fontWeight: 600 }} variant="outlined" id="copy-button" onClick={(e) => alert(
-                          `This feature is coming soon... 
-By using the sensor IDs the actual sensors(hardware) will be mapped to the cloud database in future.
-                          `)}>
-                          Copy ID
-                        </Button></td>
+                        <td>{sensor.sensorName}</td>
 
                         <td>
                           {/* add a check box */}
