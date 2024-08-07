@@ -9,6 +9,7 @@ import Register from "./components/register/Register";
 import ZoneManagement from "./components/ZoneManagement/Zonemangement";
 import FarmMangement from "./components/FarmManagement/FarmMangement";
 import ZoneSensor from "./components/ZoneSensorActionPage/ZoneSensor";
+import Sensor from "./components/Sensor/Sensor";
 import { createTheme } from "@mui/material";
 import { ThemeProvider } from "@emotion/react";
 import { greenishblue } from "./config";
@@ -34,11 +35,9 @@ function App() {
             <Route path="/zone-management" element={<ZoneManagement />} />
             <Route path="/farm-management" element={<FarmMangement />} />
             <Route path="/zone-sensor-action" element={<ZoneSensor />} />
-
-            <Route path="*" element={<h1>Coming Soon...</h1>} />
-
             <Route path="/create-worker" element={<CreateWorker />} />
-
+            <Route path="/create-sensor" element={<Sensor />} />
+            <Route path="*" element={<h1>Coming Soon...</h1>} />
           </Routes>
         </BrowserRouter>
       </ThemeProvider>
