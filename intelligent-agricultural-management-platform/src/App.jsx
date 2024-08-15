@@ -14,6 +14,7 @@ import { createTheme } from "@mui/material";
 import { ThemeProvider } from "@emotion/react";
 import { greenishblue } from "./config";
 import CreateWorker from "./components/Worker/CreateWorker";
+import WorkerManagement from "./components/WorkerManagement/WorkerManagement";
 const theme = createTheme({
   palette: {
     primary: {
@@ -33,6 +34,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/create-account" element={<Register />} />
             <Route path="/zone-management" element={<ZoneManagement />} />
+            <Route path="/worker-management" element={<WorkerManagement />} />
             <Route path="/farm-management" element={<FarmMangement />} />
             <Route path="/zone-sensor-action" element={<ZoneSensor />} />
             <Route path="/create-worker" element={<CreateWorker />} />
