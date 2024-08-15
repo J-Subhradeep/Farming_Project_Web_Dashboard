@@ -280,7 +280,15 @@ const Zonecontainer = styled.div`
   width: 90%;
   padding: 10px;
 
-  overflow: scroll;
+
+  overflow-y: scroll;
+  &::-webkit-scrollbar{
+      width:5px;
+      background-color:white;
+  }
+  &::-webkit-scrollbar-thumb{
+    background-color: #c0c0c0;
+  }
 `;
 
 const NavigateList = styled.ul`

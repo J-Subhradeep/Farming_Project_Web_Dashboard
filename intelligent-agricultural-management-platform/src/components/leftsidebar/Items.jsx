@@ -6,6 +6,7 @@ import GroupWorkIcon from '@mui/icons-material/GroupWork';
 import WaterDropIcon from '@mui/icons-material/WaterDrop';
 import SensorsIcon from '@mui/icons-material/Sensors';
 import DashboardIcon from '@mui/icons-material/Dashboard';
+import EngineeringIcon from '@mui/icons-material/Engineering';
 import { Link } from 'react-router-dom';
 const Items = () => {
     return (
@@ -40,6 +41,15 @@ const Items = () => {
                         <GroupWorkIcon />
                     </ListItemIcon>
                     <ListItemText primary="Zone Management" />
+                </ListItemButton>
+            </Link>
+
+            <Link to="/worker-management">
+                <ListItemButton>
+                    <ListItemIcon>
+                        <EngineeringIcon />
+                    </ListItemIcon>
+                    <ListItemText primary="Worker Management" />
                 </ListItemButton>
             </Link>
 
