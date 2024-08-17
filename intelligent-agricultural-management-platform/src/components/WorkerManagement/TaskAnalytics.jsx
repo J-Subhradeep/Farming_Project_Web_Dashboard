@@ -84,7 +84,7 @@ const TaskAnalytics = () => {
                         </Typography>
                         <Typography variant="body1" paragraph textAlign={"justify"}>
 
-                            The Farm Manager will utilize the task analytics to thoroughly review and assess the performance and progress of tasks assigned within the farm. By analyzing key metrics such as task completion rates, pending tasks, and missed deadlines, the manager can gain valuable insights into the efficiency of farm operations. This data-driven approach enables the manager to make informed decisions when assigning tasks to farm workers. The insights from the analytics help in understanding which tasks are completed on time and which face delays, allowing the manager to allocate resources more effectively and optimize workflow. By leveraging task analytics, the Farm Manager ensures that tasks are assigned based on performance trends, ultimately enhancing productivity and operational efficiency on the farm.
+                        The Farm Manager will use task analytics to evaluate farm performance. By analyzing task completion rates, delays, and pending tasks, the manager can optimize resource allocation and improve overall efficiency. This data-driven approach helps assign tasks effectively based on worker performance.
                         </Typography>
 
                         <TaskListProviderStyles>
