@@ -9,7 +9,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
-import { fetchFarmByManagerId, fetchZones, getWorkerList } from './TaskListUtils/Requests';
+import { fetchFarmByManagerId, fetchZones, getWorkerList, sendTaskData } from './WorkerUtils/Requests';
 
 const AssignTaskForm = ({ open, onClose, onSubmit }) => {
   const [formData, setFormData] = useState({
@@ -18,6 +18,7 @@ const AssignTaskForm = ({ open, onClose, onSubmit }) => {
     worker: '',
     title: '',
     description: '',
+    deadline: 0,
     files: ''
   });
   let [farms, setFarms] = useState([]);
@@ -115,6 +116,17 @@ const AssignTaskForm = ({ open, onClose, onSubmit }) => {
           multiline
           rows={4}
         />
+        <TextField
+          fullWidth
+          type='number'
+          margin="normal"
+          label="Complete By (Days)"
+          name="deadline"
+          value={formData.deadline}
+          onChange={handleChange}
+          // multiline
+          // rows={4}
+        />
         <input
           type="file"
           // onChange={handleFileChange}
@@ -125,7 +137,9 @@ const AssignTaskForm = ({ open, onClose, onSubmit }) => {
         <Button onClick={onClose} color="primary">
           Cancel
         </Button>
-        <Button onClick={onClose} color="primary" variant='contained'>
+        <Button onClick={()=>{
+          sendTaskData(formData.worker, formData.title, formData.description, formData.deadline, onClose)
+        }} color="primary" variant='contained'>
           Assign
         </Button>
       </DialogActions>

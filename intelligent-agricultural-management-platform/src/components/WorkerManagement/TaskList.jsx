@@ -16,8 +16,8 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import PendingIcon from '@mui/icons-material/HourglassEmpty';
 import MissedIcon from '@mui/icons-material/ErrorOutline';
-import TaskListProvider from './TaskListUtils/TaskListProvider';
-import { fetchFarmByManagerId, fetchZones, getWorkerList } from './TaskListUtils/Requests';
+import TaskListProvider from './WorkerUtils/TaskListProvider';
+import { fetchFarmByManagerId, fetchZones, getWorkerList } from './WorkerUtils/Requests';
 
 const TaskList = ({ open, onClose }) => {
   const [formData, setFormData] = useState({

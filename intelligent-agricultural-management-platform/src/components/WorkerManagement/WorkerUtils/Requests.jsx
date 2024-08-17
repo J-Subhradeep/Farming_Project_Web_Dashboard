@@ -58,3 +58,32 @@ export const getWorkerList = async (zoneId, token, setWorkers) => {
         console.log(err);
     }
 };
+
+
+
+export async function sendTaskData( assignedTo, title, description, deadline, onClose) {
+    const url = 'https://api.web-project.in/agriculture/tasks/add-task';
+    const data = {
+        "assignedBy":  localStorage.getItem("username"),
+        "assignedTo": assignedTo,
+        "title": title,
+        "description": description,
+        "deadline": deadline
+    };
+
+    const config = {
+        headers: {
+            'Authorization': `Bearer ${sessionStorage.getItem("i_token")}`, // Replace with your actual token
+            'Content-Type': 'application/json'
+        }
+    };
+    // console.log(data, config);
+    
+    try {
+        const response = await axios.post(url, data, config);
+        console.log('Response:', response.data);
+        onClose();
+    } catch (error) {
+        console.error('Error:', error.response ? error.response.data : error.message);
+    }
+}
