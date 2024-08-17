@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -17,7 +17,7 @@ const AssignTaskForm = ({ open, onClose, onSubmit }) => {
     worker: '',
     title: '',
     description: '',
-    file: null,
+    file: [],
   });
 
   const handleChange = (event) => {
@@ -28,12 +28,6 @@ const AssignTaskForm = ({ open, onClose, onSubmit }) => {
     });
   };
 
-  const handleFileChange = (event) => {
-    setFormData({
-      ...formData,
-      file: event.target.files[0],
-    });
-  };
 
   const handleSubmit = () => {
     onSubmit(formData);
@@ -102,7 +96,7 @@ const AssignTaskForm = ({ open, onClose, onSubmit }) => {
         />
         <input
           type="file"
-          onChange={handleFileChange}
+          // onChange={handleFileChange}
           style={{ marginTop: '16px', marginBottom: '16px' }}
         />
       </DialogContent>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -17,6 +17,7 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import PendingIcon from '@mui/icons-material/HourglassEmpty';
 import MissedIcon from '@mui/icons-material/ErrorOutline';
 import TaskListProvider from './TaskListUtils/TaskListProvider';
+import { fetchFarmByManagerId, fetchZones, getWorkerList } from './TaskListUtils/Requests';
 
 const TaskList = ({ open, onClose }) => {
   const [formData, setFormData] = useState({
@@ -24,10 +25,12 @@ const TaskList = ({ open, onClose }) => {
     zone: '',
     worker: '',
   });
-
+  let [farms, setFarms] = useState([]);
+  const [zones, setZones] = useState([]);
+  const [workers, setWorkers] = useState([]);
   const [tasks, setTasks] = useState([]);
-
-  const handleChange = (event) => {
+  const [workerId, setWorkerId] = useState(null);
+  const handleChange = async (event) => {
     const { name, value } = event.target;
     setFormData({
       ...formData,
@@ -35,44 +38,14 @@ const TaskList = ({ open, onClose }) => {
     });
   };
 
-  const handleSubmit = () => {
-    // Simulate fetching tasks for the selected worker
-    const fetchedTasks = [
-      {
-        title: 'Task 1',
-        description: 'Description for Task 1',
-        assignedOn: '2024-08-01',
-        status: 'completed',
-      },
-      {
-        title: 'Task 2',
-        description: 'Description for Task 2',
-        assignedOn: '2024-08-05',
-        status: 'pending',
-      },
-      {
-        title: 'Task 3',
-        description: 'Description for Task 3',
-        assignedOn: '2024-08-10',
-        status: 'missed',
-      },
-    ];
-
-    setTasks(fetchedTasks);
-  };
-
-  const getStatusIcon = (status) => {
-    switch (status) {
-      case 'completed':
-        return <CheckCircleIcon style={{ color: 'green' }} />;
-      case 'pending':
-        return <PendingIcon style={{ color: 'orange' }} />;
-      case 'missed':
-        return <MissedIcon style={{ color: 'red' }} />;
-      default:
-        return null;
+  useEffect(() => {
+    const localToken = sessionStorage.getItem("i_token");
+    if (!localToken) {
+      window.location.href = "/login";
     }
-  };
+    fetchFarmByManagerId(localStorage.getItem("username"), localToken, setFarms);
+  }, []);
+
 
   return (
     <Dialog open={open} onClose={onClose} fullWidth maxWidth="md">
@@ -86,9 +59,13 @@ const TaskList = ({ open, onClose }) => {
             onChange={handleChange}
           >
             <MenuItem value=""><em>None</em></MenuItem>
-            <MenuItem value="Farm1">Farm 1</MenuItem>
-            <MenuItem value="Farm2">Farm 2</MenuItem>
-            <MenuItem value="Farm3">Farm 3</MenuItem>
+            {farms.map((farm) => (
+              <MenuItem key={farm.id} value={farm.id} onClick={(e) => {
+                fetchZones(farm.id, sessionStorage.getItem("i_token"), setZones);
+              }}>
+                {farm.name}
+              </MenuItem>
+            ))}
           </Select>
         </FormControl>
         <FormControl fullWidth margin="normal">
@@ -99,9 +76,13 @@ const TaskList = ({ open, onClose }) => {
             onChange={handleChange}
           >
             <MenuItem value=""><em>None</em></MenuItem>
-            <MenuItem value="Zone1">Zone 1</MenuItem>
-            <MenuItem value="Zone2">Zone 2</MenuItem>
-            <MenuItem value="Zone3">Zone 3</MenuItem>
+            {zones.map((zone) => (
+              <MenuItem key={zone.id} value={zone.id} onClick={(e) => {
+                getWorkerList(zone.id, sessionStorage.getItem("i_token"), setWorkers);
+              }}>
+                {zone.name}
+              </MenuItem>
+            ))}
           </Select>
         </FormControl>
         <FormControl fullWidth margin="normal">
@@ -112,23 +93,20 @@ const TaskList = ({ open, onClose }) => {
             onChange={handleChange}
           >
             <MenuItem value=""><em>None</em></MenuItem>
-            <MenuItem value="Worker1">Worker 1</MenuItem>
-            <MenuItem value="Worker2">Worker 2</MenuItem>
-            <MenuItem value="Worker3">Worker 3</MenuItem>
+            {workers.map((worker) => (
+              <MenuItem key={worker.id} value={worker.id} onClick={(e) => {
+                setWorkerId(worker.id);
+                //  getWorkerList(worker.id, sessionStorage.getItem("i_token"), setWorkers);
+              }}>
+                {worker.name} | {worker.mobile}
+              </MenuItem>
+            ))}
           </Select>
         </FormControl>
-
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={handleSubmit}
-          style={{ marginTop: '16px' }}
-          fullWidth
-        >
-          Submit
-        </Button>
-
-        {tasks.length > 0 && <TaskListProvider tasks={tasks} />}
+            <br />
+            <br />
+            <br />
+        <TaskListProvider workerId={workerId} />
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose} color="primary">
