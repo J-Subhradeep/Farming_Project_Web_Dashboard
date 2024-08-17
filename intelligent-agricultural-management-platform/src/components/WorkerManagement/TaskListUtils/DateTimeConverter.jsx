@@ -1,9 +1,11 @@
 export const DatetimeConverter = (newValue) => {
     let dateString = "" + newValue.$d;
     const date = new Date(dateString);
+    date.setHours(date.getHours() + 5);
+    date.setMinutes(date.getMinutes() + 30);
 
-    // Get the ISO string and remove the milliseconds
     const isoString = date.toISOString().split('.')[0];
+
 
     // Get the timezone offset in "+HH:MM" format
     const timezoneOffset = dateString.match(/GMT([+-]\d{4})/)[1];
@@ -11,20 +13,21 @@ export const DatetimeConverter = (newValue) => {
 
     // Combine the ISO string with the formatted timezone offset
     const formattedDate = `${isoString}${formattedTimezoneOffset}`;
+    
 
     return formattedDate;
 }
 
-export const checkIfDeadlineExpired = (deadline) =>{
+export const checkIfDeadlineExpired = (deadline) => {
     const deadlineDate = new Date(deadline);
-    
+
     // Get the current time in IST
     const currentDate = new Date();
-    
+
     // Convert current time to IST
     const offset = 5.5 * 60 * 60 * 1000; // IST offset from UTC in milliseconds
     const currentISTTime = new Date(currentDate.getTime() + offset);
-    
+
     // Compare the deadline with the current IST time
     if (deadlineDate < currentISTTime) {
         return 'missed';

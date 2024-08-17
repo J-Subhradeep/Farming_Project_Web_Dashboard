@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -9,6 +9,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
+import { fetchFarmByManagerId, fetchZones, getWorkerList } from './TaskListUtils/Requests';
 
 const AssignTaskForm = ({ open, onClose, onSubmit }) => {
   const [formData, setFormData] = useState({
@@ -17,10 +18,14 @@ const AssignTaskForm = ({ open, onClose, onSubmit }) => {
     worker: '',
     title: '',
     description: '',
-    file: [],
+    files: ''
   });
-
-  const handleChange = (event) => {
+  let [farms, setFarms] = useState([]);
+  const [zones, setZones] = useState([]);
+  const [workers, setWorkers] = useState([]);
+  const [tasks, setTasks] = useState([]);
+  const [workerId, setWorkerId] = useState(null);
+  const handleChange = async (event) => {
     const { name, value } = event.target;
     setFormData({
       ...formData,
@@ -28,14 +33,17 @@ const AssignTaskForm = ({ open, onClose, onSubmit }) => {
     });
   };
 
-
-  const handleSubmit = () => {
-    onSubmit(formData);
-  };
+  useEffect(() => {
+    const localToken = sessionStorage.getItem("i_token");
+    if (!localToken) {
+      window.location.href = "/login";
+    }
+    fetchFarmByManagerId(localStorage.getItem("username"), localToken, setFarms);
+  }, []);
 
   return (
-    <Dialog open={open} onClose={onClose}>
-      <DialogTitle>Task Form</DialogTitle>
+    <Dialog open={open} onClose={onClose} fullWidth maxWidth="md">
+      <DialogTitle>Assign Task Form</DialogTitle>
       <DialogContent>
         <FormControl fullWidth margin="normal">
           <InputLabel>Select Farm</InputLabel>
@@ -45,9 +53,13 @@ const AssignTaskForm = ({ open, onClose, onSubmit }) => {
             onChange={handleChange}
           >
             <MenuItem value=""><em>None</em></MenuItem>
-            <MenuItem value="Farm1">Farm 1</MenuItem>
-            <MenuItem value="Farm2">Farm 2</MenuItem>
-            <MenuItem value="Farm3">Farm 3</MenuItem>
+            {farms.map((farm) => (
+              <MenuItem key={farm.id} value={farm.id} onClick={(e) => {
+                fetchZones(farm.id, sessionStorage.getItem("i_token"), setZones);
+              }}>
+                {farm.name}
+              </MenuItem>
+            ))}
           </Select>
         </FormControl>
         <FormControl fullWidth margin="normal">
@@ -58,9 +70,13 @@ const AssignTaskForm = ({ open, onClose, onSubmit }) => {
             onChange={handleChange}
           >
             <MenuItem value=""><em>None</em></MenuItem>
-            <MenuItem value="Zone1">Zone 1</MenuItem>
-            <MenuItem value="Zone2">Zone 2</MenuItem>
-            <MenuItem value="Zone3">Zone 3</MenuItem>
+            {zones.map((zone) => (
+              <MenuItem key={zone.id} value={zone.id} onClick={(e) => {
+                getWorkerList(zone.id, sessionStorage.getItem("i_token"), setWorkers);
+              }}>
+                {zone.name}
+              </MenuItem>
+            ))}
           </Select>
         </FormControl>
         <FormControl fullWidth margin="normal">
@@ -71,9 +87,14 @@ const AssignTaskForm = ({ open, onClose, onSubmit }) => {
             onChange={handleChange}
           >
             <MenuItem value=""><em>None</em></MenuItem>
-            <MenuItem value="Worker1">Worker 1</MenuItem>
-            <MenuItem value="Worker2">Worker 2</MenuItem>
-            <MenuItem value="Worker3">Worker 3</MenuItem>
+            {workers.map((worker) => (
+              <MenuItem key={worker.id} value={worker.id} onClick={(e) => {
+                setWorkerId(worker.id);
+                //  getWorkerList(worker.id, sessionStorage.getItem("i_token"), setWorkers);
+              }}>
+                {worker.name} | {worker.mobile}
+              </MenuItem>
+            ))}
           </Select>
         </FormControl>
         <TextField
@@ -104,8 +125,8 @@ const AssignTaskForm = ({ open, onClose, onSubmit }) => {
         <Button onClick={onClose} color="primary">
           Cancel
         </Button>
-        <Button onClick={handleSubmit} color="primary" variant="contained">
-          Submit
+        <Button onClick={onClose} color="primary" variant='contained'>
+          Assign
         </Button>
       </DialogActions>
     </Dialog>
