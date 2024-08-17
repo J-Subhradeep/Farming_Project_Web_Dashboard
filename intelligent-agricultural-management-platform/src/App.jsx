@@ -15,6 +15,7 @@ import { ThemeProvider } from "@emotion/react";
 import { greenishblue } from "./config";
 import CreateWorker from "./components/Worker/CreateWorker";
 import WorkerManagement from "./components/WorkerManagement/WorkerManagement";
+import TaskAnalytics from "./components/WorkerManagement/TaskAnalytics";
 const theme = createTheme({
   palette: {
     primary: {
@@ -23,7 +24,7 @@ const theme = createTheme({
   },
 });
 function App() {
-  const [count, setCount] = useState(0);
+
 
   return (
     <>
@@ -35,6 +36,7 @@ function App() {
             <Route path="/create-account" element={<Register />} />
             <Route path="/zone-management" element={<ZoneManagement />} />
             <Route path="/worker-management" element={<WorkerManagement />} />
+            <Route path="/task-analytics" element={<TaskAnalytics />} />
             <Route path="/farm-management" element={<FarmMangement />} />
             <Route path="/zone-sensor-action" element={<ZoneSensor />} />
             <Route path="/create-worker" element={<CreateWorker />} />

@@ -79,7 +79,7 @@ const WorkerManagement = () => {
                         </Grid>
                         <Grid item xs={12} sm={12} md={6}>
                             <Card sx={{ height: '140px', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: theme.palette.primary.main, color: "white" }} onClick={() => handleOpenDialog('form2')}>
-                                <CardActionArea  sx={{ textAlign: 'center', height: "100%", display: "flex", backgroundColor: "primary" }}>
+                                <CardActionArea component={Link} to="/task-analytics"  sx={{ textAlign: 'center', height: "100%", display: "flex", backgroundColor: "primary" }}>
                                     <CardContent>
                                         < BarChartIcon sx={{ fontSize: 40 }} />
                                         <Typography variant="h6">Task Analytics</Typography>

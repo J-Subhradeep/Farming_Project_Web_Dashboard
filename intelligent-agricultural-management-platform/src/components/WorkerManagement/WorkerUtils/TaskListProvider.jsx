@@ -153,7 +153,7 @@ const TaskListProvider = ({ workerId }) => {
                                 primary={task.title}
                                 secondary={<>
                                     <Typography component="span" variant="body2" color="textPrimary">
-                                        {task.description} | {task.done}
+                                        {task.description} 
                                     </Typography>
                                     <br />
                                     <Typography component="span" variant="body2" color="textSecondary">
