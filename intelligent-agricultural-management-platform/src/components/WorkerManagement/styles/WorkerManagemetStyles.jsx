@@ -65,3 +65,18 @@ export const Zonecontainer = styled.div`
     }
   }
 `;
+
+export const TaskListProviderStyles = styled.div`
+
+  display:flex;
+  align-items: center;
+  
+  .submit-button{
+
+    margin-left: 15px;
+    height: 55px;
+  }
+
+
+
+`
