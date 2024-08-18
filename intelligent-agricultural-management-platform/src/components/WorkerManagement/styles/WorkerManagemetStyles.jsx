@@ -31,8 +31,11 @@ export const Contianer = styled.div`
   //   justify-content: space-between;
   gap: 10px;
   width: 100%;
-  height: 100vh;
+  max-height: 100vh;
   /* background-color: #253c95; */
+  /* background-color: #0033ff; */
+  /* contain: content; */
+  /* overflow-y: scroll; */
   background-color: #f5f6fa;
 
 `;
@@ -109,6 +112,7 @@ overflow-y: scroll;
     align-items: center;
     justify-content : center;
     flex-direction: column;
+    /* overflow-y: scroll; */
   }
 `;
 
@@ -116,7 +120,7 @@ export const TaskListProviderStyles = styled.div`
 
   display:flex;
   align-items: center;
-  
+  position: relative;
   .submit-button{
 
     margin-left: 15px;

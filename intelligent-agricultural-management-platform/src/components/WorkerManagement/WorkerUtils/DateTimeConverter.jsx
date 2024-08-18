@@ -64,3 +64,73 @@ export const formatDateString = (dateString) => {
     // Format the final date string
     return `${day} ${month} ${year}, ${hours}:${minutes}${ampm}`;
 }
+
+
+export const getOneWeekAgoDate = () => {
+    // Create a new Date object representing the current date and time
+    const now = new Date();
+
+    // Subtract 7 days from the current date
+    const oneWeekAgo = new Date(now.setDate(now.getDate() - 7));
+
+    // Format the date and time to 'YYYY-MM-DDTHH:mm' in Asia/Kolkata timezone
+    const formatter = new Intl.DateTimeFormat('en-GB', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false,
+        timeZone: 'Asia/Kolkata'
+    });
+
+    const [{ value: day },,{ value: month },,{ value: year },,{ value: hour },,{ value: minute }] = formatter.formatToParts(oneWeekAgo);
+
+    // Return the formatted date string
+    return `${year}-${month}-${day}T${hour}:${minute}`;
+};
+
+export const getcurrentoDate = () => {
+    // Create a new Date object representing the current date and time
+    const now = new Date();
+
+    // Subtract 7 days from the current date
+    const currentDate = new Date(now.setDate(now.getDate()));
+
+    // Format the date and time to 'YYYY-MM-DDTHH:mm' in Asia/Kolkata timezone
+    const formatter = new Intl.DateTimeFormat('en-GB', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false,
+        timeZone: 'Asia/Kolkata'
+    });
+
+    const [{ value: day },,{ value: month },,{ value: year },,{ value: hour },,{ value: minute }] = formatter.formatToParts(currentDate);
+
+    // Return the formatted date string
+    return `${year}-${month}-${day}T${hour}:${minute}`;
+};
+
+
+export const formatDateReadable = (dateString) => {
+    const date = new Date(dateString);
+
+    // Define options for formatting the date and time
+
+    const timeOptions = { hour: 'numeric', minute: '2-digit', hour12: true };
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+    const year = date.getFullYear();
+    // Create formatters
+    const timeFormatter = new Intl.DateTimeFormat('en-US', timeOptions);
+
+    // Format the date and time
+    // const formattedDate = dateFormatter.format(date);
+    const formattedTime = timeFormatter.format(date);
+
+    // Return the combined formatted string
+    return `${day}/${month}/${year} | ${formattedTime}`;
+};
