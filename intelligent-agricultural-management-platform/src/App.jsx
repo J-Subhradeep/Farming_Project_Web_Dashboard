@@ -12,15 +12,20 @@ import ZoneSensor from "./components/ZoneSensorActionPage/ZoneSensor";
 import Sensor from "./components/Sensor/Sensor";
 import { createTheme } from "@mui/material";
 import { ThemeProvider } from "@emotion/react";
-import { greenishblue } from "./config";
+import { greenishblue, secondaryblue } from "./config";
 import CreateWorker from "./components/Worker/CreateWorker";
 import WorkerManagement from "./components/WorkerManagement/WorkerManagement";
 import TaskAnalytics from "./components/WorkerManagement/TaskAnalytics";
+import IrrigationSystemComponent from "./components/IrrigationSystemManagement/IrrigationSystemComponent";
+import IrrigationControl from "./components/IrrigationSystemManagement/IrrigationControl";
 const theme = createTheme({
   palette: {
     primary: {
       main: greenishblue,
     },
+    secondary: {
+      main: secondaryblue
+    }
   },
 });
 function App() {
@@ -37,6 +42,8 @@ function App() {
             <Route path="/zone-management" element={<ZoneManagement />} />
             <Route path="/worker-management" element={<WorkerManagement />} />
             <Route path="/task-analytics" element={<TaskAnalytics />} />
+            <Route path="/irrigation-systems" element={<IrrigationSystemComponent />} />
+            <Route path="/irrigation-systems-control" element={<IrrigationControl />} />
             <Route path="/farm-management" element={<FarmMangement />} />
             <Route path="/zone-sensor-action" element={<ZoneSensor />} />
             <Route path="/create-worker" element={<CreateWorker />} />

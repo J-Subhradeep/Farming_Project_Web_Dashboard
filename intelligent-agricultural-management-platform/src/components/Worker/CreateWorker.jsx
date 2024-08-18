@@ -124,8 +124,8 @@ const CreateWorker = () => {
           </Link>
 
           <MdKeyboardArrowRight />
-          <Link to="/zone-management">
-            <li>Zone</li>
+          <Link to="/worker-management">
+            <li>Worker Management</li>
           </Link>
 
           <MdKeyboardArrowRight />
