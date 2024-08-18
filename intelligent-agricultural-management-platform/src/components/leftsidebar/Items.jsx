@@ -53,8 +53,8 @@ const Items = () => {
                 </ListItemButton>
             </Link>
 
-            <Link to="/">
-                <ListItemButton onClick={(e) => alert(`This feature is coming soon...`)}>
+            <Link to="/irrigation-systems">
+                <ListItemButton>
                     <ListItemIcon>
                         <WaterDropIcon />
                     </ListItemIcon>

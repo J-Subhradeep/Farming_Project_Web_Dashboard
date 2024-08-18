@@ -11,7 +11,6 @@ export const fetchFarmByManagerId = async (id, authtoken, setFarms) => {
                 }
             )
             .then((res) => {
-                console.log(res.data);
                 setFarms(res.data);
             });
     } catch (err) {
@@ -32,13 +31,29 @@ export const fetchZones = async (farmId, token, setZones) => {
             )
             .then((res) => {
                 setZones(res.data);
-                console.log(res.data);
             });
     } catch (err) {
         console.log(err);
     }
 };
-
+export const fetchSensors = async (farmId, token, setSensors) => {
+    try {
+        await axios
+            .get(
+                `https://api.web-project.in/agriculture/farms/get/irrigation-sensors?farmId=${farmId}`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            )
+            .then((res) => {
+                setSensors(res.data);
+            });
+    } catch (err) {
+        console.log(err);
+    }
+};
 export const getWorkerList = async (zoneId, token, setWorkers) => {
     try {
         await axios
