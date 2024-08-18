@@ -2,20 +2,33 @@ import { Link } from "react-router-dom"
 import LeftSidebar from "../leftsidebar/Leftsidebar"
 import { Contianer, NavigateList, TaskListProviderStyles, Zonecontainer } from "./styles/WorkerManagemetStyles"
 import { MdKeyboardArrowRight } from "react-icons/md"
-import { Button, ButtonGroup, Card, CardActionArea, CardContent, Grid, TextField, Typography, useTheme } from "@mui/material"
+import { Box, Button, ButtonGroup, Card, CardActionArea, CardContent, Dialog, DialogActions, DialogContent, DialogTitle, Grid, styled, TextField, Typography, useTheme } from "@mui/material"
 import { Home, Info, ContactMail, Settings, People } from '@mui/icons-material';
 import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import FormatListNumberedRtlIcon from '@mui/icons-material/FormatListNumberedRtl';
 import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import AssignTaskForm from "./AssignTaskForm"
 import TaskList from "./TaskList"
 import PieChart from "./WorkerUtils/charts/PieChart"
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider"
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker"
-import { DatetimeConverter } from "./WorkerUtils/DateTimeConverter"
+import { DatetimeConverter, formatDateReadable, getcurrentoDate, getOneWeekAgoDate } from "./WorkerUtils/DateTimeConverter"
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs"
+import dayjs from 'dayjs';
+import axios from "axios";
+import { fetchTaskAnalytics } from "./WorkerUtils/Requests"
+const CenteredDialog = styled(Dialog)(({ theme }) => ({
+    '& .MuiDialog-paper': {
+        position: 'fixed',
+        bottom: 0,
+        left: '50%',
+        transform: 'translateX(-50%)',
+        margin: theme.spacing(2),
+        width: '80%',
+    },
+}));
 const TaskAnalytics = () => {
     const [dialogState, setDialogState] = useState({
         form1: false,
@@ -38,17 +51,19 @@ const TaskAnalytics = () => {
     };
     const theme = useTheme();
 
-    const taskData = {
-        completedTasks: 2,
-        pendingTasks: 3,
-        missedTasks: 4,
-    };
+    const [taskAnalytics, setTaskAnalytics] = useState({
+        completedTasks: 0,
+        pendingTasks: 0,
+        missedTasks: 0
+    });
 
-    const [startDatetime, setStartDatetime] = useState(null);
-    const [endDatetime, setEndDatetime] = useState(null);
-    const [startDate, setStartDate] = useState('');
-    const [endDate, setEndDate] = useState('');
+    const [startDatetime, setStartDatetime] = useState(dayjs(getOneWeekAgoDate()));
+    const [endDatetime, setEndDatetime] = useState(dayjs(getcurrentoDate()));
+    const [startDate, setStartDate] = useState(DatetimeConverter(startDatetime));
+    const [endDate, setEndDate] = useState(DatetimeConverter(endDatetime));
     const handleStartDatetimeChange = (newValue) => {
+
+
         setStartDate(DatetimeConverter(newValue))
         setStartDatetime(newValue);
     };
@@ -57,6 +72,23 @@ const TaskAnalytics = () => {
         setEndDate(DatetimeConverter(newValue));
         setEndDatetime(newValue);
     };
+
+    const [open, setOpen] = useState(false);
+    const [activePicker, setActivePicker] = useState(null);
+ 
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+    const handleClickOpen = (picker) => {
+        setActivePicker(picker);
+        setOpen(true);
+    };
+
+    useEffect(() => {
+        fetchTaskAnalytics(startDate, endDate, setTaskAnalytics);
+    }, [])
+    
     return (
         <Contianer>
 
@@ -77,36 +109,53 @@ const TaskAnalytics = () => {
 
                 </NavigateList>
                 <div className="task-analytics">
-                    <div className="task-analytics-docs docs1">
+                    <div className="task-analytics-docs">
 
                         <Typography variant="h4" gutterBottom>
                             Overall Task Analytics
                         </Typography>
                         <Typography variant="body1" paragraph textAlign={"justify"}>
 
-                        The Farm Manager will use task analytics to evaluate farm performance. By analyzing task completion rates, delays, and pending tasks, the manager can optimize resource allocation and improve overall efficiency. This data-driven approach helps assign tasks effectively based on worker performance.
+                            The Farm Manager will use task analytics to evaluate farm performance. By analyzing task completion rates, delays, and pending tasks, the manager can optimize resource allocation and improve overall efficiency. This data-driven approach helps assign tasks effectively based on worker performance.
                         </Typography>
 
                         <TaskListProviderStyles>
                             <LocalizationProvider dateAdapter={AdapterDayjs}>
-
-                                <DateTimePicker
+                                <TextField
                                     label="Start DateTime"
-                                    value={startDatetime}
-                                    onChange={handleStartDatetimeChange}
-                                    renderInput={(params) => <TextField {...params} />}
+                                    value={startDatetime ? formatDateReadable( startDatetime.format('YYYY-MM-DDTHH:mm')) : ''}
+                                    onClick={() => handleClickOpen('start')}
+                                    readOnly
                                 />
-                                <DateTimePicker
+                                <TextField
                                     sx={{ marginLeft: 2 }}
                                     label="End DateTime"
-                                    value={endDatetime}
-                                    onChange={handleEndDatetimeChange}
-                                    renderInput={(params) => <TextField {...params} />}
+                                    value={endDatetime ? formatDateReadable(endDatetime.format('YYYY-MM-DDTHH:mm')) : ''}
+                                    onClick={() => handleClickOpen('end')}
+                                    readOnly
                                 />
+
+                                <CenteredDialog open={open} onClose={handleClose}>
+                                    <DialogTitle>Select Date and Time</DialogTitle>
+                                    <DialogContent>
+                                        <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                                            <DateTimePicker
+                                                value={activePicker === 'start' ? startDatetime : endDatetime}
+                                                onChange={activePicker === 'start' ? handleStartDatetimeChange : handleEndDatetimeChange}
+                                                renderInput={(params) => <TextField {...params} />}
+                                                sx={{ width: '100%' }}
+                                            />
+                                        </Box>
+                                    </DialogContent>
+                                    <DialogActions>
+                                        <Button onClick={handleClose}>Cancel</Button>
+                                        <Button onClick={handleClose}>OK</Button>
+                                    </DialogActions>
+                                </CenteredDialog>
                             </LocalizationProvider>
                             <Button color="primary" variant="contained" className='submit-button'
                                 onClick={(e) => {
-                                    fetchTasks(currentPage - 1, 3, startDate, endDate, workerId, sessionStorage.getItem("i_token"))
+                                    fetchTaskAnalytics(startDate, endDate, setTaskAnalytics);
                                 }}
 
                             >
@@ -127,9 +176,9 @@ const TaskAnalytics = () => {
                     <div className="task-analytics-docs docs2">
 
                         <PieChart
-                            completedTasks={taskData.completedTasks}
-                            pendingTasks={taskData.pendingTasks}
-                            missedTasks={taskData.missedTasks}
+                            completedTasks={taskAnalytics.completedTasks}
+                            pendingTasks={taskAnalytics.pendingTasks}
+                            missedTasks={taskAnalytics.missedTasks}
                         />
                     </div>
                 </div>

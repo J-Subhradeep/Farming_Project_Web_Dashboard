@@ -17,8 +17,8 @@ const PieChart = ({ completedTasks, pendingTasks, missedTasks }) => {
             {
                 label: 'Task Analytics',
                 data: [completedTasks, pendingTasks, missedTasks],
-                backgroundColor: ['#36A2EB', '#FFCE56', '#FF6384'],
-                hoverBackgroundColor: ['#36A2EB', '#FFCE56', '#FF6384'],
+                backgroundColor: ['#0e9105', '#ffc636', '#ff2525'],
+                hoverBackgroundColor: ['#026508', '#ffcc00', '#ba0000'],
             },
         ],
     };

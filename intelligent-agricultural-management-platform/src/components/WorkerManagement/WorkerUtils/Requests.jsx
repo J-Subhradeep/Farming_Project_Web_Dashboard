@@ -87,3 +87,28 @@ export async function sendTaskData( assignedTo, title, description, deadline, on
         console.error('Error:', error.response ? error.response.data : error.message);
     }
 }
+
+export const fetchTaskAnalytics = async (startDate, endDate, setTaskAnalytics) => {
+    try {
+        const response = await axios.post(
+            'https://api.web-project.in/search-n-analytics/task/analytics',
+            {
+                startDate: startDate,
+                endDate: endDate,
+                managerId: localStorage.getItem("username")
+            },
+            {
+                headers: {
+                    Authorization: 'Bearer ' + sessionStorage.getItem("i_token"),
+                    'Content-Type': 'application/json'
+                }
+            }
+        );
+
+        const { completedTasks, pendingTasks, missedTasks } = response.data;
+        setTaskAnalytics({ completedTasks, pendingTasks, missedTasks });
+    } catch (error) {
+        console.error('Error fetching task analytics:', error);
+        // Handle error accordingly
+    }
+};
