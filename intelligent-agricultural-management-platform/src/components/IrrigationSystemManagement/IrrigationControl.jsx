@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom"
 import LeftSidebar from "../leftsidebar/Leftsidebar"
-import { Contianer, NavigateList, Zonecontainer } from "./styles/IrrigationSystemComponentStyles"
+import { AreaChartStyles, Contianer, NavigateList, Zonecontainer } from "./styles/IrrigationSystemComponentStyles"
 import { MdKeyboardArrowRight } from "react-icons/md"
 import { Box, Button, Card, CardActionArea, CardContent, FormControl, FormControlLabel, Grid, InputLabel, MenuItem, Select, Switch, TextField, ToggleButton, ToggleButtonGroup, Typography, useTheme } from "@mui/material"
 import { Home, Info, ContactMail, Settings, People } from '@mui/icons-material';
@@ -9,13 +9,14 @@ import BarChartIcon from '@mui/icons-material/BarChart';
 import FormatListNumberedRtlIcon from '@mui/icons-material/FormatListNumberedRtl';
 import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
 import { useEffect, useState } from "react"
-import { fetchFarmByManagerId, fetchSensors, fetchZones } from "../WorkerManagement/WorkerUtils/Requests"
+import { fetchFarmByManagerId, fetchSensors, fetchSensorState, fetchZones, sendSensorStateUpdate } from "../WorkerManagement/WorkerUtils/Requests"
+import AreaChart from "./charts/AreaChart"
 const IrrigationControl = () => {
     const [farm, setFarm] = useState('');
     const [sensor, setSensor] = useState('');
+    const [sensorId, setSensorId] = useState('')
     let [farms, setFarms] = useState([]);
     const [sensors, setSensors] = useState([]);
-    const [zoneName, setZoneName] = useState('');
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -35,11 +36,32 @@ const IrrigationControl = () => {
 
 
     // const [switch1, setSwitch1] = useState(false);
-    const [switch2, setSwitch2] = useState(false);
-    const [automaticMode, setAutomaticMode] = useState(false);
+    const [irrigationSystemOn, setIrrigationSystemOn] = useState(false);
+    const [automaticModeEnabled, setAutomaticModeEnabled] = useState(false);
+
+    useEffect(() => {
 
 
+        fetchSensorState(sensorId, setAutomaticModeEnabled, setIrrigationSystemOn, sessionStorage.getItem("i_token"))
+    }, [sensorId])
 
+    const handleAutomaticModeChange = (e) => {
+        sendSensorStateUpdate(!automaticModeEnabled, true, false, false, sensorId, sessionStorage.getItem("i_token"));
+        setAutomaticModeEnabled(e.target.checked);
+
+    }
+
+
+    const data = [
+        { timestamp: '2024-08-19T10:00:00Z', value: true },
+        { timestamp: '2024-08-19T10:05:00Z', value: false },
+        { timestamp: '2024-08-19T10:10:00Z', value: true },
+        { timestamp: '2024-08-19T10:15:00Z', value: true },
+        { timestamp: '2024-08-19T10:20:00Z', value: false },
+        // Add more data points as needed
+    ];
+
+    const [showGraph, setShowGraph] = useState(false);
     return (
         <Contianer>
 
@@ -89,7 +111,10 @@ const IrrigationControl = () => {
                             >
                                 <MenuItem value=""><em>None</em></MenuItem>
                                 {sensors.map((sensor) => (
-                                    <MenuItem key={sensor.id} value={sensor.id}>
+                                    <MenuItem key={sensor.id} value={sensor.id}
+                                        onClick={(e) => setSensorId(sensor.id)
+                                        }
+                                    >
                                         {sensor.name}
                                     </MenuItem>
                                 ))}
@@ -102,13 +127,13 @@ const IrrigationControl = () => {
                     <Typography variant="h6" gutterBottom textAlign={"center"}>
                         Control Panel
                     </Typography>
-                    <div style={{display:"flex", justifyContent:"space-between", width:"430px"}}>
+                    <div style={{ display: "flex", justifyContent: "space-between", width: "430px" }}>
 
                         <FormControlLabel
                             control={
                                 <Switch
-                                    checked={automaticMode}
-                                    onChange={(e) => setAutomaticMode(e.target.checked)}
+                                    checked={automaticModeEnabled}
+                                    onChange={(e) => handleAutomaticModeChange(e)}
                                     color="primary"
                                 />
                             }
@@ -117,10 +142,10 @@ const IrrigationControl = () => {
                         <FormControlLabel
                             control={
                                 <Switch
-                                    checked={switch2}
-                                    onChange={(e) => setSwitch2(e.target.checked)}
+                                    checked={irrigationSystemOn}
+                                    onChange={(e) => setIrrigationSystemOn(e.target.checked)}
                                     color="primary"
-                                    disabled={automaticMode}
+                                    disabled={automaticModeEnabled}
                                 />
                             }
                             label="Water Pump (On/Off)"
@@ -128,6 +153,25 @@ const IrrigationControl = () => {
 
                     </div>
                 </Box>
+
+                {
+                    showGraph && <AreaChartStyles>
+                        <Typography variant="h6" gutterBottom textAlign={"center"}>
+                            Water Pump State Visualizer
+                        </Typography>
+                        <AreaChart data={data} />
+                    </AreaChartStyles>
+                }
+                <Box sx={{ padding: 3, minWidth: 400, margin: '20px auto', display: "flex", justifyContent: "center" }}>
+                    <Link style={{ width: "50%", height: 50, position: "relavite" }}>
+                        <Button type="submit" variant="contained" color="secondary" style={{ width: "100%", height: 50, position: "relavite" }}
+                            onClick={() => setShowGraph(!showGraph)}
+                        >
+                            {showGraph ? "Hide" : "Show"} Water Pump State Graph
+                        </Button>
+                    </Link>
+                </Box>
+
 
             </Zonecontainer>
         </Contianer>

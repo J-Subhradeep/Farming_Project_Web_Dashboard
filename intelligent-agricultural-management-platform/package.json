@@ -23,6 +23,7 @@
     "axios": "^1.7.2",
     "bootstrap": "^5.3.3",
     "chart.js": "^4.4.3",
+    "chartjs-adapter-date-fns": "^3.0.0",
     "dayjs": "^1.11.12",
     "formik": "^2.4.6",
     "moment-timezone": "^0.5.45",

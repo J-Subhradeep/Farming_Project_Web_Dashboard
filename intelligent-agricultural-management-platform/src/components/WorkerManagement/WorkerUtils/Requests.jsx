@@ -127,3 +127,51 @@ export const fetchTaskAnalytics = async (startDate, endDate, setTaskAnalytics) =
         // Handle error accordingly
     }
 };
+
+
+export const fetchSensorState = async (sensorId,setAutomaticModeEnabled, setIrrigationSystemOn, token) => {
+    try {
+      const response = await axios.get(
+        'https://api.web-project.in/websocket/api/sensor/get-state?id='+sensorId,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      );
+
+      const { automaticModeEnabled,  irrigationSystemOn, } = response.data;
+
+      setAutomaticModeEnabled(automaticModeEnabled);
+      setIrrigationSystemOn(irrigationSystemOn);
+    } catch (error) {
+      console.error('Error fetching sensor state:', error);
+    }
+  };
+
+export async function sendSensorStateUpdate(automaticModeEnabled, automationControlSignal, irrigationSystemOn,irrigationControlSignal, sensorId, token) {
+    const requestBody = {
+      toId: sensorId,
+      automaticModeEnabled,
+      automationControlSignal,
+      irrigationSystemOn,
+      irrigationControlSignal
+    };
+  
+    try {
+      const response = await axios.post(
+        'https://api.web-project.in/websocket/api/sensor/send',
+        requestBody,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          }
+        }
+      );
+  
+      console.log('Response:', response.data);
+    } catch (error) {
+      console.error('Error sending sensor state update:', error);
+    }
+  }
